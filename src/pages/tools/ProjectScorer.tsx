@@ -11,8 +11,8 @@ const ProjectScorer = () => {
   return (
     <>
       <SEO 
-        title="Project Viability Scorer - Validate Your Side Project Idea"
-        description="Get an objective score for your side project idea. Evaluate market potential, competition risk, and founder fit to make better decisions."
+        title="Let's See If Anyone Will Actually Pay For This - Project Viability Scorer"
+        description="5 minutes of brutal honesty about your side project idea. Could save you 5 months of wasted building."
         url="/tools/project-scorer"
       />
       <div className="container mx-auto px-4 py-8">
