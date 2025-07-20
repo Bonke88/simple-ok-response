@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SearchBar from '@/components/search/SearchBar';
+import CommandSearch from '@/components/search/CommandSearch';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,18 +24,21 @@ const Header = () => {
       <div className="content-container">
         {/* First Row - Logo, Tagline, Search and Subscribe Button */}
         <div className="flex h-20 items-center justify-between gap-4">
-          {/* Left spacer for mobile menu */}
-          <div className="w-10 md:w-auto">
+          {/* Left Side - Mobile Menu + Search */}
+          <div className="flex items-center gap-2">
             <button
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
+            <div className="md:hidden">
+              <CommandSearch />
+            </div>
           </div>
 
           {/* Center Logo and Tagline */}
-          <div className="flex flex-col items-center flex-1">
+          <div className="flex flex-col items-center flex-1 max-w-4xl mx-auto">
             <Link to="/" className="flex items-center mb-1">
               <img 
                 src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
@@ -43,18 +46,15 @@ const Header = () => {
                 className="h-24 w-auto"
               />
             </Link>
-            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl">
+            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl px-2">
               Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
             </p>
           </div>
 
           {/* Right Side - Search and Subscribe */}
           <div className="flex items-center gap-3">
-            <div className="hidden md:block w-64">
-              <SearchBar 
-                placeholder="Search articles..." 
-                className="w-full"
-              />
+            <div className="hidden md:block">
+              <CommandSearch />
             </div>
             <Button 
               asChild 
@@ -123,14 +123,6 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
-            {/* Mobile Search */}
-            <div className="px-2">
-              <SearchBar 
-                placeholder="Search articles..." 
-                className="w-full"
-              />
-            </div>
-
             <Link 
               to="/" 
               className="block py-2 font-medium"
