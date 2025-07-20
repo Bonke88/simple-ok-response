@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SearchBar from '@/components/search/SearchBar';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,8 +22,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
-        {/* First Row - Logo, Tagline and Subscribe Button */}
-        <div className="flex h-20 items-center justify-between">
+        {/* First Row - Logo, Tagline, Search and Subscribe Button */}
+        <div className="flex h-20 items-center justify-between gap-4">
           {/* Left spacer for mobile menu */}
           <div className="w-10 md:w-auto">
             <button
@@ -34,7 +35,7 @@ const Header = () => {
           </div>
 
           {/* Center Logo and Tagline */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center flex-1">
             <Link to="/" className="flex items-center mb-1">
               <img 
                 src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
@@ -42,16 +43,22 @@ const Header = () => {
                 className="h-24 w-auto"
               />
             </Link>
-            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-md">
+            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl">
               Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
             </p>
           </div>
 
-          {/* Right Subscribe Button */}
-          <div className="flex items-center">
+          {/* Right Side - Search and Subscribe */}
+          <div className="flex items-center gap-3">
+            <div className="hidden md:block w-64">
+              <SearchBar 
+                placeholder="Search articles..." 
+                className="w-full"
+              />
+            </div>
             <Button 
               asChild 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 md:px-6 rounded-full font-semibold text-sm"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 md:px-6 rounded-full font-semibold text-sm whitespace-nowrap"
             >
               <Link to="/newsletter">Subscribe</Link>
             </Button>
@@ -116,6 +123,14 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
+            {/* Mobile Search */}
+            <div className="px-2">
+              <SearchBar 
+                placeholder="Search articles..." 
+                className="w-full"
+              />
+            </div>
+
             <Link 
               to="/" 
               className="block py-2 font-medium"
