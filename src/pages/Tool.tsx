@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +8,10 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProjectScorerForm from '@/components/tools/ProjectScorerForm';
 import ProjectScorerResults from '@/components/tools/ProjectScorerResults';
+import LaunchDiagnosticForm from '@/components/tools/LaunchDiagnosticForm';
+import LaunchDiagnosticResults from '@/components/tools/LaunchDiagnosticResults';
+import CustomerPlanForm from '@/components/tools/CustomerPlanForm';
+import CustomerPlanResults from '@/components/tools/CustomerPlanResults';
 
 const Tool = () => {
   const { toolSlug } = useParams();
@@ -35,7 +38,8 @@ const Tool = () => {
         'Answer questions about your current progress and available time',
         'We calculate your launch probability based on real data',
         'Get a personalized action plan to improve your odds'
-      ]
+      ],
+      hasInteractiveVersion: true
     },
     'customer-plan': {
       title: 'This Week\'s Customer Plan',
@@ -44,7 +48,8 @@ const Tool = () => {
         'Tell us your current situation and available energy',
         'We match tactics to your constraints and energy level',
         'Get 3 specific tasks you can complete this week'
-      ]
+      ],
+      hasInteractiveVersion: true
     },
     'energy-scheduler': {
       title: 'Energy-Reality Scheduler',
@@ -93,7 +98,6 @@ const Tool = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // This would connect to an email service in production
     console.log('Tool submission:', { tool: toolSlug, email });
     setSubmitted(true);
   };
@@ -132,8 +136,8 @@ const Tool = () => {
     );
   }
 
-  // Show results page if tool is completed
-  if (toolResult && toolSlug === 'project-scorer') {
+  // Show results page for interactive tools
+  if (toolResult) {
     return (
       <div className="py-16">
         <div className="content-container">
@@ -148,19 +152,21 @@ const Tool = () => {
 
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <h1 className="mb-4">Your Project Viability Results</h1>
-              <p className="text-muted-foreground">Based on your responses, here's how your project scores</p>
+              <h1 className="mb-4">Your {currentTool.title} Results</h1>
+              <p className="text-muted-foreground">Based on your responses, here are your personalized insights</p>
             </div>
 
-            <ProjectScorerResults result={toolResult} />
+            {toolSlug === 'project-scorer' && <ProjectScorerResults result={toolResult} />}
+            {toolSlug === 'launch-diagnostic' && <LaunchDiagnosticResults result={toolResult} />}
+            {toolSlug === 'customer-plan' && <CustomerPlanResults result={toolResult} />}
 
             <div className="text-center mt-12">
               <Card>
                 <CardContent className="pt-8 pb-8">
                   <h3 className="text-xl font-bold mb-4">Want the full detailed report?</h3>
                   <p className="text-muted-foreground mb-6">
-                    Get a comprehensive PDF with specific action items, market research tips, 
-                    and a 30-day launch roadmap tailored to your project.
+                    Get a comprehensive PDF with specific action items, templates, 
+                    and a personalized roadmap tailored to your situation.
                   </p>
                   <form onSubmit={handleSubmit} className="max-w-md mx-auto">
                     <div className="flex space-x-2">
@@ -186,7 +192,7 @@ const Tool = () => {
   }
 
   // Show interactive tool if available and started
-  if (toolStarted && currentTool.hasInteractiveVersion && toolSlug === 'project-scorer') {
+  if (toolStarted && currentTool.hasInteractiveVersion) {
     return (
       <div className="py-16">
         <div className="content-container">
@@ -199,7 +205,9 @@ const Tool = () => {
             </Button>
           </div>
 
-          <ProjectScorerForm onComplete={handleToolResult} />
+          {toolSlug === 'project-scorer' && <ProjectScorerForm onComplete={handleToolResult} />}
+          {toolSlug === 'launch-diagnostic' && <LaunchDiagnosticForm onComplete={handleToolResult} />}
+          {toolSlug === 'customer-plan' && <CustomerPlanForm onComplete={handleToolResult} />}
         </div>
       </div>
     );
@@ -241,7 +249,6 @@ const Tool = () => {
             </CardContent>
           </Card>
 
-          {/* Show interactive option for supported tools */}
           {currentTool.hasInteractiveVersion ? (
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
@@ -251,7 +258,7 @@ const Tool = () => {
                 <CardContent>
                   <p className="text-muted-foreground mb-6">
                     Get instant results with our interactive assessment tool. 
-                    Complete the evaluation and see your score immediately.
+                    Complete the evaluation and see your results immediately.
                   </p>
                   <Button 
                     onClick={() => setToolStarted(true)}
@@ -286,7 +293,7 @@ const Tool = () => {
                     </Button>
                     
                     <p className="text-sm text-muted-foreground text-center">
-                      Comprehensive analysis with specific action items and market research.
+                      Comprehensive analysis with specific action items and templates.
                     </p>
                   </form>
                 </CardContent>
