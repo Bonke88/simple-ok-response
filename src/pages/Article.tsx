@@ -1,15 +1,51 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Clock, Share2, Bookmark } from 'lucide-react';
 import { getArticleBySlug, getRelatedArticles } from '@/lib/content';
+import { useAnalytics } from '@/components/analytics/AnalyticsProvider';
+import { useReadingProgress } from '@/hooks/useReadingProgress';
+import ReadingProgress from '@/components/ui/reading-progress';
 
 const Article = () => {
   const { category, slug } = useParams<{ category: string; slug: string }>();
+  const { trackPageView, trackArticleEngagement } = useAnalytics();
   const article = getArticleBySlug(slug as string);
   const relatedArticles = article ? getRelatedArticles(article) : [];
+  
+  const { progress, isEngaged, readingTime, isComplete } = useReadingProgress(
+    article?.slug || '', 
+    { threshold: 25 }
+  );
+
+  useEffect(() => {
+    if (article) {
+      trackPageView(`/articles/${category}/${slug}`, {
+        article_title: article.title,
+        article_category: article.category,
+        article_difficulty: article.difficulty
+      });
+    }
+  }, [article, category, slug, trackPageView]);
+
+  useEffect(() => {
+    if (article && isEngaged) {
+      trackArticleEngagement(article.slug, 'engaged', {
+        reading_time: readingTime,
+        progress: progress
+      });
+    }
+  }, [article, isEngaged, trackArticleEngagement, readingTime, progress]);
+
+  useEffect(() => {
+    if (article && isComplete) {
+      trackArticleEngagement(article.slug, 'completed', {
+        total_reading_time: readingTime,
+        final_progress: progress
+      });
+    }
+  }, [article, isComplete, trackArticleEngagement, readingTime, progress]);
 
   if (!article) {
     return (
@@ -43,7 +79,6 @@ const Article = () => {
     });
   };
 
-  // Convert markdown-style content to basic HTML (simplified for demo)
   const renderContent = (content: string) => {
     return content.split('\n').map((paragraph, index) => {
       if (paragraph.startsWith('# ')) {
@@ -65,8 +100,41 @@ const Article = () => {
     });
   };
 
+  const handleShare = () => {
+    if (article) {
+      trackArticleEngagement(article.slug, 'shared');
+      // Add actual sharing logic here
+      if (navigator.share) {
+        navigator.share({
+          title: article.title,
+          text: article.description,
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+      }
+    }
+  };
+
+  const handleBookmark = () => {
+    if (article) {
+      trackArticleEngagement(article.slug, 'bookmarked');
+      // Add bookmarking logic (localStorage or user account)
+      const bookmarks = JSON.parse(localStorage.getItem('gtm_bookmarks') || '[]');
+      if (!bookmarks.includes(article.slug)) {
+        bookmarks.push(article.slug);
+        localStorage.setItem('gtm_bookmarks', JSON.stringify(bookmarks));
+      }
+    }
+  };
+
   return (
     <div className="py-16">
+      {/* Fixed reading progress bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+        <ReadingProgress progress={progress} className="px-4 py-2" />
+      </div>
+
       <div className="content-container">
         <div className="mb-8">
           <Button asChild variant="ghost" className="mb-4">
@@ -106,11 +174,11 @@ const Article = () => {
                   ))}
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={handleShare}>
                     <Share2 className="h-4 w-4 mr-1" />
                     Share
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={handleBookmark}>
                     <Bookmark className="h-4 w-4 mr-1" />
                     Save
                   </Button>
@@ -122,6 +190,14 @@ const Article = () => {
           {/* Article Content */}
           <div className="prose prose-lg max-w-none mb-12">
             {renderContent(article.content)}
+          </div>
+
+          {/* Reading Stats */}
+          <div className="bg-muted/50 rounded-lg p-4 mb-12">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>Reading Progress: {progress}%</span>
+              <span>Time: {Math.floor(readingTime / 60)}:{(readingTime % 60).toString().padStart(2, '0')}</span>
+            </div>
           </div>
 
           {/* Newsletter CTA */}

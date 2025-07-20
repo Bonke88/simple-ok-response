@@ -1,4 +1,3 @@
-
 export interface Article {
   slug: string;
   title: string;
@@ -480,7 +479,7 @@ If you want to launch anonymously:
 
 Remember: The goal isn't to hide forever. It's to protect yourself during the vulnerable early stages and prove the business works before having difficult conversations with your employer.
 
-Many successful entrepreneurs started this way. The key is doing it legally, carefully, and with proper protection.`
+Many successful entrepreneurs started this way. The key is doing it legally, carefully, and with proper protection.
   }
 ];
 
@@ -512,4 +511,68 @@ export const searchArticles = (query: string): Article[] => {
     article.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
     article.content.toLowerCase().includes(lowercaseQuery)
   );
+};
+
+export const filterArticles = (articles: Article[], filters: {
+  category?: string;
+  difficulty?: string;
+  readTime?: string;
+  tags?: string[];
+}): Article[] => {
+  return articles.filter(article => {
+    // Category filter
+    if (filters.category && article.category !== filters.category) {
+      return false;
+    }
+
+    // Difficulty filter
+    if (filters.difficulty && article.difficulty !== filters.difficulty) {
+      return false;
+    }
+
+    // Read time filter
+    if (filters.readTime) {
+      const readTimeNum = parseInt(article.readTime);
+      switch (filters.readTime) {
+        case 'short':
+          if (readTimeNum >= 5) return false;
+          break;
+        case 'medium':
+          if (readTimeNum < 5 || readTimeNum > 10) return false;
+          break;
+        case 'long':
+          if (readTimeNum <= 10) return false;
+          break;
+      }
+    }
+
+    // Tags filter
+    if (filters.tags && filters.tags.length > 0) {
+      const hasMatchingTag = filters.tags.some(tag => 
+        article.tags.includes(tag)
+      );
+      if (!hasMatchingTag) return false;
+    }
+
+    return true;
+  });
+};
+
+export const getAllTags = (): string[] => {
+  const allTags = articlesData.flatMap(article => article.tags);
+  return Array.from(new Set(allTags)).sort();
+};
+
+export const getPopularTags = (limit: number = 10): string[] => {
+  const tagCounts = articlesData
+    .flatMap(article => article.tags)
+    .reduce((acc, tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+  return Object.entries(tagCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, limit)
+    .map(([tag]) => tag);
 };
