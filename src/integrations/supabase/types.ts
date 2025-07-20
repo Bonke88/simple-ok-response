@@ -14,7 +14,135 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      content_data: {
+        Row: {
+          actually_implemented: boolean | null
+          article_slug: string
+          email: string
+          id: string
+          read_date: string
+          resulted_in_customers: boolean | null
+          what_didnt: string | null
+          what_worked: string | null
+        }
+        Insert: {
+          actually_implemented?: boolean | null
+          article_slug: string
+          email: string
+          id?: string
+          read_date?: string
+          resulted_in_customers?: boolean | null
+          what_didnt?: string | null
+          what_worked?: string | null
+        }
+        Update: {
+          actually_implemented?: boolean | null
+          article_slug?: string
+          email?: string
+          id?: string
+          read_date?: string
+          resulted_in_customers?: boolean | null
+          what_didnt?: string | null
+          what_worked?: string | null
+        }
+        Relationships: []
+      }
+      cookbook_subscribers: {
+        Row: {
+          biggest_gtm_blocker: string | null
+          created_at: string
+          current_mrr: number | null
+          email: string
+          has_customers: boolean | null
+          hours_per_week_available: number | null
+          id: string
+          project_stage: Database["public"]["Enums"]["project_stage"] | null
+        }
+        Insert: {
+          biggest_gtm_blocker?: string | null
+          created_at?: string
+          current_mrr?: number | null
+          email: string
+          has_customers?: boolean | null
+          hours_per_week_available?: number | null
+          id?: string
+          project_stage?: Database["public"]["Enums"]["project_stage"] | null
+        }
+        Update: {
+          biggest_gtm_blocker?: string | null
+          created_at?: string
+          current_mrr?: number | null
+          email?: string
+          has_customers?: boolean | null
+          hours_per_week_available?: number | null
+          id?: string
+          project_stage?: Database["public"]["Enums"]["project_stage"] | null
+        }
+        Relationships: []
+      }
+      gtm_experiments: {
+        Row: {
+          customers_gained: number | null
+          email: string
+          experiment_date: string
+          experiment_type: string
+          hours_invested: number | null
+          hypothesis: string | null
+          id: string
+          result: string | null
+        }
+        Insert: {
+          customers_gained?: number | null
+          email: string
+          experiment_date?: string
+          experiment_type: string
+          hours_invested?: number | null
+          hypothesis?: string | null
+          id?: string
+          result?: string | null
+        }
+        Update: {
+          customers_gained?: number | null
+          email?: string
+          experiment_date?: string
+          experiment_type?: string
+          hours_invested?: number | null
+          hypothesis?: string | null
+          id?: string
+          result?: string | null
+        }
+        Relationships: []
+      }
+      tool_usage: {
+        Row: {
+          action_taken_after: string | null
+          email: string
+          id: string
+          inputs_provided: Json | null
+          output_helpful: boolean | null
+          tool_name: string
+          usage_date: string
+        }
+        Insert: {
+          action_taken_after?: string | null
+          email: string
+          id?: string
+          inputs_provided?: Json | null
+          output_helpful?: boolean | null
+          tool_name: string
+          usage_date?: string
+        }
+        Update: {
+          action_taken_after?: string | null
+          email?: string
+          id?: string
+          inputs_provided?: Json | null
+          output_helpful?: boolean | null
+          tool_name?: string
+          usage_date?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +151,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      project_stage:
+        | "Just an idea"
+        | "Building in secret"
+        | "80% done"
+        | "Launched to crickets"
+        | "Making some money"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +283,14 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      project_stage: [
+        "Just an idea",
+        "Building in secret",
+        "80% done",
+        "Launched to crickets",
+        "Making some money",
+      ],
+    },
   },
 } as const
