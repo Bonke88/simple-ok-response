@@ -37,18 +37,15 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Center Logo and Tagline */}
+          {/* Center Logo */}
           <div className="flex flex-col items-center flex-1 max-w-4xl mx-auto">
-            <Link to="/" className="flex items-center mb-1">
+            <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
                 alt="GTMjon" 
                 className="h-24 w-auto"
               />
             </Link>
-            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl px-2">
-              Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
-            </p>
           </div>
 
           {/* Right Side - Search and Subscribe */}
@@ -63,6 +60,13 @@ const Header = () => {
               <Link to="/newsletter">Subscribe</Link>
             </Button>
           </div>
+        </div>
+
+        {/* Tagline Row - Centered beneath logo */}
+        <div className="flex justify-center pb-3">
+          <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl px-2">
+            Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
+          </p>
         </div>
 
         {/* Second Row - Navigation */}
