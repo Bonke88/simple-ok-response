@@ -7,6 +7,7 @@ import { getArticleBySlug, getRelatedArticles } from '@/lib/content';
 import { useAnalytics } from '@/components/analytics/AnalyticsProvider';
 import { useReadingProgress } from '@/hooks/useReadingProgress';
 import ReadingProgress from '@/components/ui/reading-progress';
+import SEO from '@/components/seo/SEO';
 
 const Article = () => {
   const { category, slug } = useParams<{ category: string; slug: string }>();
@@ -49,15 +50,22 @@ const Article = () => {
 
   if (!article) {
     return (
-      <div className="py-16">
-        <div className="content-container text-center">
-          <h1>Article Not Found</h1>
-          <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist.</p>
-          <Button asChild>
-            <Link to={`/articles/${category}`}>← Back to {category}</Link>
-          </Button>
+      <>
+        <SEO
+          title="Article Not Found"
+          description="The article you're looking for doesn't exist."
+          noIndex={true}
+        />
+        <div className="py-16">
+          <div className="content-container text-center">
+            <h1>Article Not Found</h1>
+            <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist.</p>
+            <Button asChild>
+              <Link to={`/articles/${category}`}>← Back to {category}</Link>
+            </Button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -129,124 +137,140 @@ const Article = () => {
   };
 
   return (
-    <div className="py-16">
-      {/* Fixed reading progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
-        <ReadingProgress progress={progress} className="px-4 py-2" />
-      </div>
-
-      <div className="content-container">
-        <div className="mb-8">
-          <Button asChild variant="ghost" className="mb-4">
-            <Link to={`/articles/${category}`} className="flex items-center space-x-2">
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back to {category}</span>
-            </Link>
-          </Button>
+    <>
+      <SEO
+        title={article.title}
+        description={article.description}
+        keywords={article.tags}
+        url={`/articles/${category}/${slug}`}
+        type="article"
+        article={{
+          author: "GTM Night Shift",
+          publishedTime: article.publishedDate,
+          section: article.category,
+          tags: article.tags
+        }}
+      />
+      
+      <div className="py-16">
+        {/* Fixed reading progress bar */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+          <ReadingProgress progress={progress} className="px-4 py-2" />
         </div>
 
-        <article className="max-w-4xl mx-auto">
-          {/* Article Header */}
-          <header className="mb-12">
-            <div className="mb-6">
-              <div className="flex items-center space-x-4 mb-4">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(article.difficulty)}`}>
-                  {article.difficulty}
-                </span>
-                <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  <span>{article.readTime}</span>
+        <div className="content-container">
+          <div className="mb-8">
+            <Button asChild variant="ghost" className="mb-4">
+              <Link to={`/articles/${category}`} className="flex items-center space-x-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span>Back to {category}</span>
+              </Link>
+            </Button>
+          </div>
+
+          <article className="max-w-4xl mx-auto">
+            {/* Article Header */}
+            <header className="mb-12">
+              <div className="mb-6">
+                <div className="flex items-center space-x-4 mb-4">
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(article.difficulty)}`}>
+                    {article.difficulty}
+                  </span>
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    <span>{article.readTime}</span>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {formatDate(article.publishedDate)}
+                  </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {formatDate(article.publishedDate)}
-                </span>
+                
+                <h1 className="mb-4">{article.title}</h1>
+                <p className="text-xl text-muted-foreground mb-6">{article.description}</p>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {article.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-1 bg-muted rounded text-sm">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button variant="outline" size="sm" onClick={handleShare}>
+                      <Share2 className="h-4 w-4 mr-1" />
+                      Share
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={handleBookmark}>
+                      <Bookmark className="h-4 w-4 mr-1" />
+                      Save
+                    </Button>
+                  </div>
+                </div>
               </div>
-              
-              <h1 className="mb-4">{article.title}</h1>
-              <p className="text-xl text-muted-foreground mb-6">{article.description}</p>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-2">
-                  {article.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-muted rounded text-sm">
-                      #{tag}
-                    </span>
+            </header>
+
+            {/* Article Content */}
+            <div className="prose prose-lg max-w-none mb-12">
+              {renderContent(article.content)}
+            </div>
+
+            {/* Reading Stats */}
+            <div className="bg-muted/50 rounded-lg p-4 mb-12">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>Reading Progress: {progress}%</span>
+                <span>Time: {Math.floor(readingTime / 60)}:{(readingTime % 60).toString().padStart(2, '0')}</span>
+              </div>
+            </div>
+
+            {/* Newsletter CTA */}
+            <Card className="mb-12">
+              <CardContent className="pt-8 pb-8 text-center">
+                <h3 className="text-2xl font-bold mb-4">Get More Tactical GTM Advice</h3>
+                <p className="text-muted-foreground mb-6">
+                  Join 12,000+ engineers getting one practical go-to-market tactic every Tuesday. 
+                  5-minute reads that respect your time.
+                </p>
+                <Button asChild className="gtm-button-primary text-lg px-8 py-3">
+                  <Link to="/newsletter">Subscribe to GTM Night Shift →</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Related Articles */}
+            {relatedArticles.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {relatedArticles.map((relatedArticle) => (
+                    <Link key={relatedArticle.slug} to={`/articles/${relatedArticle.category}/${relatedArticle.slug}`}>
+                      <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                        <CardHeader>
+                          <CardTitle className="text-lg hover:text-accent transition-colors">
+                            {relatedArticle.title}
+                          </CardTitle>
+                          <p className="text-muted-foreground text-sm">
+                            {relatedArticle.description}
+                          </p>
+                          <div className="flex items-center justify-between pt-2">
+                            <span className="text-xs text-muted-foreground">
+                              {relatedArticle.readTime}
+                            </span>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(relatedArticle.difficulty)}`}>
+                              {relatedArticle.difficulty}
+                            </span>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    </Link>
                   ))}
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm" onClick={handleShare}>
-                    <Share2 className="h-4 w-4 mr-1" />
-                    Share
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={handleBookmark}>
-                    <Bookmark className="h-4 w-4 mr-1" />
-                    Save
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          {/* Article Content */}
-          <div className="prose prose-lg max-w-none mb-12">
-            {renderContent(article.content)}
-          </div>
-
-          {/* Reading Stats */}
-          <div className="bg-muted/50 rounded-lg p-4 mb-12">
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <span>Reading Progress: {progress}%</span>
-              <span>Time: {Math.floor(readingTime / 60)}:{(readingTime % 60).toString().padStart(2, '0')}</span>
-            </div>
-          </div>
-
-          {/* Newsletter CTA */}
-          <Card className="mb-12">
-            <CardContent className="pt-8 pb-8 text-center">
-              <h3 className="text-2xl font-bold mb-4">Get More Tactical GTM Advice</h3>
-              <p className="text-muted-foreground mb-6">
-                Join 12,000+ engineers getting one practical go-to-market tactic every Tuesday. 
-                5-minute reads that respect your time.
-              </p>
-              <Button asChild className="gtm-button-primary text-lg px-8 py-3">
-                <Link to="/newsletter">Subscribe to GTM Night Shift →</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Related Articles */}
-          {relatedArticles.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {relatedArticles.map((relatedArticle) => (
-                  <Link key={relatedArticle.slug} to={`/articles/${relatedArticle.category}/${relatedArticle.slug}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                      <CardHeader>
-                        <CardTitle className="text-lg hover:text-accent transition-colors">
-                          {relatedArticle.title}
-                        </CardTitle>
-                        <p className="text-muted-foreground text-sm">
-                          {relatedArticle.description}
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <span className="text-xs text-muted-foreground">
-                            {relatedArticle.readTime}
-                          </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(relatedArticle.difficulty)}`}>
-                            {relatedArticle.difficulty}
-                          </span>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-        </article>
+              </section>
+            )}
+          </article>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
