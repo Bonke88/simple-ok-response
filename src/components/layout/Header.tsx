@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -56,13 +57,13 @@ const Header = () => {
               asChild 
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 md:px-6 rounded-full font-semibold text-sm whitespace-nowrap"
             >
-              <Link to="/newsletter">Subscribe</Link>
+              <Link to="/newsletter">Newsletter</Link>
             </Button>
           </div>
         </div>
 
-        {/* Tagline Row - Reduced padding */}
-        <div className="flex justify-center pb-1">
+        {/* Tagline Row - Further reduced padding */}
+        <div className="flex justify-center pb-0">
           <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl px-2">
             Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
           </p>
