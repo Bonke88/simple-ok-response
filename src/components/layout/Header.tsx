@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -22,7 +21,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
-        {/* First Row - Logo, Tagline, Search and Subscribe Button */}
+        {/* First Row - Logo, Search and Subscribe Button */}
         <div className="flex h-20 items-center justify-between gap-4">
           {/* Left Side - Mobile Menu + Search */}
           <div className="flex items-center gap-2">
@@ -37,8 +36,8 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Center Logo */}
-          <div className="flex flex-col items-center flex-1 max-w-4xl mx-auto">
+          {/* Center Logo - Better centering */}
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
@@ -62,8 +61,8 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Tagline Row - Centered beneath logo */}
-        <div className="flex justify-center pb-3">
+        {/* Tagline Row - Reduced padding */}
+        <div className="flex justify-center pb-1">
           <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-2xl px-2">
             Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
           </p>
