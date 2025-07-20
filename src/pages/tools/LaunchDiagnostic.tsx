@@ -12,7 +12,7 @@ const LaunchDiagnostic = () => {
       <SEO 
         title="Will I Ever Launch? Diagnostic Tool"
         description="Get an honest assessment of your launch probability based on your current situation and mindset."
-        canonical="/tools/launch-diagnostic"
+        url="/tools/launch-diagnostic"
       />
       <div className="container mx-auto px-4 py-8">
         {!result ? (

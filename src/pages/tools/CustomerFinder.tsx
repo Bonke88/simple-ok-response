@@ -9,7 +9,7 @@ const CustomerFinder = () => {
       <SEO 
         title="Customer Finder Tool - Find Your First Customers"
         description="Discover where your potential customers hang out online and how to reach them effectively."
-        canonical="/tools/customer-finder"
+        url="/tools/customer-finder"
       />
       <div className="container mx-auto px-4 py-8">
         <Card>

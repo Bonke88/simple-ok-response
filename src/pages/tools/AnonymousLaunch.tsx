@@ -9,7 +9,7 @@ const AnonymousLaunch = () => {
       <SEO 
         title="Anonymous Launch Checklist - Launch Without Personal Branding"
         description="Step-by-step guide to launching your side project without using your personal brand or network."
-        canonical="/tools/anonymous-launch"
+        url="/tools/anonymous-launch"
       />
       <div className="container mx-auto px-4 py-8">
         <Card>
