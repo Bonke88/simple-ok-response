@@ -21,19 +21,46 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
-        {/* First Row - Logo and Navigation */}
-        <div className="flex h-16 items-center justify-between">
-          {/* Left Logo */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
-              alt="GTMjon" 
-              className="h-16 w-auto"
-            />
-          </Link>
+        {/* First Row - Logo, Tagline and Subscribe Button */}
+        <div className="flex h-20 items-center justify-between">
+          {/* Left spacer for mobile menu */}
+          <div className="w-10 md:w-auto">
+            <button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
 
-          {/* Right Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Center Logo and Tagline */}
+          <div className="flex flex-col items-center">
+            <Link to="/" className="flex items-center mb-1">
+              <img 
+                src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
+                alt="GTMjon" 
+                className="h-24 w-auto"
+              />
+            </Link>
+            <p className="text-muted-foreground italic font-bold text-xs md:text-sm text-center max-w-md">
+              Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
+            </p>
+          </div>
+
+          {/* Right Subscribe Button */}
+          <div className="flex items-center">
+            <Button 
+              asChild 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 md:px-6 rounded-full font-semibold text-sm"
+            >
+              <Link to="/newsletter">Subscribe</Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Second Row - Navigation */}
+        <div className="hidden md:flex h-12 items-center justify-center border-t border-border/50">
+          <nav className="flex items-center space-x-8">
             <Link 
               to="/" 
               className={`font-medium transition-colors hover:text-primary ${
@@ -83,29 +110,7 @@ const Header = () => {
             >
               Free Tools
             </Link>
-
-            <Button 
-              asChild 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-semibold"
-            >
-              <Link to="/newsletter">Subscribe</Link>
-            </Button>
           </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* Second Row - Tagline */}
-        <div className="py-3 text-center border-t border-border/50">
-          <p className="text-muted-foreground italic text-sm">
-            Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
-          </p>
         </div>
 
         {/* Mobile Navigation */}
@@ -140,12 +145,6 @@ const Header = () => {
             >
               Free Tools
             </Link>
-
-            <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground w-full rounded-full">
-              <Link to="/newsletter" onClick={() => setIsMenuOpen(false)}>
-                Subscribe
-              </Link>
-            </Button>
           </div>
         )}
       </div>
