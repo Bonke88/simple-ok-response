@@ -21,6 +21,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
+        {/* First Row - Logo and Navigation */}
         <div className="flex h-16 items-center justify-between">
           {/* Left Logo */}
           <Link to="/" className="flex items-center">
@@ -98,6 +99,13 @@ const Header = () => {
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
+        </div>
+
+        {/* Second Row - Tagline */}
+        <div className="py-3 text-center border-t border-border/50">
+          <p className="text-muted-foreground italic text-sm">
+            Where engineers at corporates get practical sales and marketing advice for their SaaS side hustle
+          </p>
         </div>
 
         {/* Mobile Navigation */}
