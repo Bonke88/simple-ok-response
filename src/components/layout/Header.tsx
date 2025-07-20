@@ -22,7 +22,16 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
         <div className="flex h-16 items-center justify-between">
-          {/* Left Navigation */}
+          {/* Left Logo */}
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
+              alt="GTMjon" 
+              className="h-16 w-auto"
+            />
+          </Link>
+
+          {/* Right Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
@@ -73,19 +82,7 @@ const Header = () => {
             >
               Free Tools
             </Link>
-          </nav>
 
-          {/* Center Logo */}
-          <Link to="/" className="flex items-center justify-center flex-1 md:flex-none">
-            <img 
-              src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
-              alt="GTMjon" 
-              className="h-12 w-auto"
-            />
-          </Link>
-
-          {/* Right Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
             <Button 
               asChild 
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-semibold"
