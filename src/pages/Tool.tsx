@@ -7,11 +7,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ProjectScorerForm from '@/components/tools/ProjectScorerForm';
+import ProjectScorerResults from '@/components/tools/ProjectScorerResults';
 
 const Tool = () => {
   const { toolSlug } = useParams();
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [toolStarted, setToolStarted] = useState(false);
+  const [toolResult, setToolResult] = useState<any>(null);
 
   const toolData: Record<string, any> = {
     'project-scorer': {
@@ -21,7 +25,8 @@ const Tool = () => {
         'Describe your project idea and target customer',
         'We analyze market size, competition, and customer acquisition difficulty',
         'Get your viability score and personalized recommendations'
-      ]
+      ],
+      hasInteractiveVersion: true
     },
     'launch-diagnostic': {
       title: 'Will I Ever Launch? Diagnostic',
@@ -93,6 +98,10 @@ const Tool = () => {
     setSubmitted(true);
   };
 
+  const handleToolResult = (result: any) => {
+    setToolResult(result);
+  };
+
   if (submitted) {
     return (
       <div className="py-16">
@@ -118,6 +127,79 @@ const Tool = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show results page if tool is completed
+  if (toolResult && toolSlug === 'project-scorer') {
+    return (
+      <div className="py-16">
+        <div className="content-container">
+          <div className="mb-8">
+            <Button asChild variant="ghost" className="mb-4">
+              <Link to="/tools" className="flex items-center space-x-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span>Back to Tools</span>
+              </Link>
+            </Button>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h1 className="mb-4">Your Project Viability Results</h1>
+              <p className="text-muted-foreground">Based on your responses, here's how your project scores</p>
+            </div>
+
+            <ProjectScorerResults result={toolResult} />
+
+            <div className="text-center mt-12">
+              <Card>
+                <CardContent className="pt-8 pb-8">
+                  <h3 className="text-xl font-bold mb-4">Want the full detailed report?</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Get a comprehensive PDF with specific action items, market research tips, 
+                    and a 30-day launch roadmap tailored to your project.
+                  </p>
+                  <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+                    <div className="flex space-x-2">
+                      <Input
+                        type="email"
+                        placeholder="your.email@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                      <Button type="submit" className="gtm-button-primary">
+                        Send Report
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show interactive tool if available and started
+  if (toolStarted && currentTool.hasInteractiveVersion && toolSlug === 'project-scorer') {
+    return (
+      <div className="py-16">
+        <div className="content-container">
+          <div className="mb-8">
+            <Button asChild variant="ghost" className="mb-4">
+              <Link to="/tools" className="flex items-center space-x-2">
+                <ArrowLeft className="h-4 w-4" />
+                <span>Back to Tools</span>
+              </Link>
+            </Button>
+          </div>
+
+          <ProjectScorerForm onComplete={handleToolResult} />
         </div>
       </div>
     );
@@ -159,37 +241,90 @@ const Tool = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Get Your Personalized Report</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="your.email@company.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="mt-2"
-                    />
+          {/* Show interactive option for supported tools */}
+          {currentTool.hasInteractiveVersion ? (
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Try Interactive Version</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-6">
+                    Get instant results with our interactive assessment tool. 
+                    Complete the evaluation and see your score immediately.
+                  </p>
+                  <Button 
+                    onClick={() => setToolStarted(true)}
+                    className="gtm-button-primary w-full text-lg py-3"
+                  >
+                    Start Assessment →
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Get Detailed Email Report</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="your.email@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="mt-2"
+                      />
+                    </div>
+                    
+                    <Button type="submit" className="gtm-button-primary w-full text-lg py-3">
+                      Get Detailed Report →
+                    </Button>
+                    
+                    <p className="text-sm text-muted-foreground text-center">
+                      Comprehensive analysis with specific action items and market research.
+                    </p>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle>Get Your Personalized Report</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="your.email@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="mt-2"
+                      />
+                    </div>
                   </div>
-                </div>
-                
-                <Button type="submit" className="gtm-button-primary w-full text-lg py-3">
-                  Get My {currentTool.title} Report →
-                </Button>
-                
-                <p className="text-sm text-muted-foreground text-center">
-                  We'll email you personalized results in 2-3 minutes. No spam, unsubscribe anytime.
-                </p>
-              </form>
-            </CardContent>
-          </Card>
+                  
+                  <Button type="submit" className="gtm-button-primary w-full text-lg py-3">
+                    Get My {currentTool.title} Report →
+                  </Button>
+                  
+                  <p className="text-sm text-muted-foreground text-center">
+                    We'll email you personalized results in 2-3 minutes. No spam, unsubscribe anytime.
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

@@ -1,49 +1,68 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Clock, Zap, Calendar } from 'lucide-react';
+import { ArrowLeft, Clock, Share2, Bookmark } from 'lucide-react';
+import { getArticleBySlug, getRelatedArticles } from '@/lib/content';
 
 const Article = () => {
-  const { category, slug } = useParams();
+  const { category, slug } = useParams<{ category: string; slug: string }>();
+  const article = getArticleBySlug(slug as string);
+  const relatedArticles = article ? getRelatedArticles(article) : [];
 
-  // This would normally fetch from a CMS or markdown files
-  const sampleArticle = {
-    title: "The Fatal Flaw: Why 99% of Side Projects Make $0",
-    content: `
-Most engineers build what they think is cool, not what customers will pay for. This is the fatal flaw that kills 99% of side projects before they ever see their first dollar of revenue.
+  if (!article) {
+    return (
+      <div className="py-16">
+        <div className="content-container text-center">
+          <h1>Article Not Found</h1>
+          <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist.</p>
+          <Button asChild>
+            <Link to={`/articles/${category}`}>← Back to {category}</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
-## The Problem: Engineer-First Thinking
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Beginner friendly': return 'text-green-600 bg-green-50';
+      case 'Tactical': return 'text-blue-600 bg-blue-50';
+      case 'Advanced tactics': return 'text-purple-600 bg-purple-50';
+      case 'Uncomfortable but necessary': return 'text-red-600 bg-red-50';
+      default: return 'text-gray-600 bg-gray-50';
+    }
+  };
 
-You see a technical problem and think "I can build a better solution." You spend months perfecting the architecture, optimizing performance, and adding features. You launch to... crickets.
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-The issue isn't your code. The issue is you solved a problem that either:
-1. Doesn't actually exist for your target customers
-2. Exists but isn't painful enough for people to pay to solve it
-3. Exists and is painful, but your solution doesn't fit how people actually work
-
-## The Solution: Customer-First Validation
-
-Before you write a single line of code, you need to validate three things:
-
-### 1. Does this problem actually exist?
-Talk to 10 potential customers. Not your engineering friends—actual people who would use and pay for your solution.
-
-### 2. Is it painful enough that they'd pay to solve it?
-Ask them: "If I could solve this problem for you, what would it be worth?" If they hesitate or say "maybe $10/month," move on.
-
-### 3. How do they currently solve this problem?
-If they're not currently spending time or money on this problem, they won't spend money on your solution either.
-
-## Key Takeaway
-
-Build solutions to problems that people are already paying to solve, just not very well. That's where the money is.
-    `,
-    readTime: "15 min",
-    difficulty: "Uncomfortable but necessary",
-    publishedDate: "3 days ago",
-    category: "Picking Winners"
+  // Convert markdown-style content to basic HTML (simplified for demo)
+  const renderContent = (content: string) => {
+    return content.split('\n').map((paragraph, index) => {
+      if (paragraph.startsWith('# ')) {
+        return <h1 key={index} className="text-3xl font-bold mt-8 mb-4">{paragraph.replace('# ', '')}</h1>;
+      }
+      if (paragraph.startsWith('## ')) {
+        return <h2 key={index} className="text-2xl font-bold mt-6 mb-3">{paragraph.replace('## ', '')}</h2>;
+      }
+      if (paragraph.startsWith('### ')) {
+        return <h3 key={index} className="text-xl font-bold mt-4 mb-2">{paragraph.replace('### ', '')}</h3>;
+      }
+      if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+        return <p key={index} className="font-bold mb-4">{paragraph.replace(/\*\*/g, '')}</p>;
+      }
+      if (paragraph.trim() === '') {
+        return <div key={index} className="mb-4"></div>;
+      }
+      return <p key={index} className="mb-4 leading-relaxed">{paragraph}</p>;
+    });
   };
 
   return (
@@ -61,60 +80,94 @@ Build solutions to problems that people are already paying to solve, just not ve
         <article className="max-w-4xl mx-auto">
           {/* Article Header */}
           <header className="mb-12">
-            <h1 className="mb-6">{sampleArticle.title}</h1>
-            <div className="flex flex-wrap gap-6 text-muted-foreground mb-8">
-              <div className="flex items-center space-x-2">
-                <Clock className="h-4 w-4" />
-                <span>{sampleArticle.readTime}</span>
+            <div className="mb-6">
+              <div className="flex items-center space-x-4 mb-4">
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(article.difficulty)}`}>
+                  {article.difficulty}
+                </span>
+                <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  <span>{article.readTime}</span>
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  {formatDate(article.publishedDate)}
+                </span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Zap className="h-4 w-4" />
-                <span>{sampleArticle.difficulty}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-4 w-4" />
-                <span>{sampleArticle.publishedDate}</span>
+              
+              <h1 className="mb-4">{article.title}</h1>
+              <p className="text-xl text-muted-foreground mb-6">{article.description}</p>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag) => (
+                    <span key={tag} className="px-2 py-1 bg-muted rounded text-sm">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="sm">
+                    <Share2 className="h-4 w-4 mr-1" />
+                    Share
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Bookmark className="h-4 w-4 mr-1" />
+                    Save
+                  </Button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none mb-16">
-            {sampleArticle.content.split('\n').map((paragraph, index) => {
-              if (paragraph.startsWith('## ')) {
-                return <h2 key={index} className="text-2xl font-bold mt-12 mb-6">{paragraph.replace('## ', '')}</h2>;
-              }
-              if (paragraph.startsWith('### ')) {
-                return <h3 key={index} className="text-xl font-semibold mt-8 mb-4">{paragraph.replace('### ', '')}</h3>;
-              }
-              if (paragraph.trim() === '') {
-                return <br key={index} />;
-              }
-              return <p key={index} className="mb-6 text-lg leading-relaxed">{paragraph}</p>;
-            })}
+          <div className="prose prose-lg max-w-none mb-12">
+            {renderContent(article.content)}
           </div>
 
-          {/* Key Takeaway Box */}
-          <Card className="mb-16 border-accent/20 bg-accent/5">
-            <CardContent className="pt-6">
-              <h3 className="text-lg font-bold mb-3 text-accent">💡 Key Takeaway</h3>
-              <p className="text-muted-foreground">
-                Build solutions to problems that people are already paying to solve, just not very well. 
-                That's where the money is.
+          {/* Newsletter CTA */}
+          <Card className="mb-12">
+            <CardContent className="pt-8 pb-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">Get More Tactical GTM Advice</h3>
+              <p className="text-muted-foreground mb-6">
+                Join 12,000+ engineers getting one practical go-to-market tactic every Tuesday. 
+                5-minute reads that respect your time.
               </p>
+              <Button asChild className="gtm-button-primary text-lg px-8 py-3">
+                <Link to="/newsletter">Subscribe to GTM Night Shift →</Link>
+              </Button>
             </CardContent>
           </Card>
 
-          {/* Newsletter CTA */}
-          <div className="text-center bg-muted/30 p-8 rounded-lg">
-            <h3 className="text-xl font-bold mb-4">Want More Tactical GTM Advice?</h3>
-            <p className="text-muted-foreground mb-6">
-              Join 12,000+ engineers getting one practical tactic every Tuesday.
-            </p>
-            <Button asChild className="gtm-button-primary">
-              <Link to="/newsletter">Get Weekly GTM Tactics</Link>
-            </Button>
-          </div>
+          {/* Related Articles */}
+          {relatedArticles.length > 0 && (
+            <section>
+              <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {relatedArticles.map((relatedArticle) => (
+                  <Link key={relatedArticle.slug} to={`/articles/${relatedArticle.category}/${relatedArticle.slug}`}>
+                    <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                      <CardHeader>
+                        <CardTitle className="text-lg hover:text-accent transition-colors">
+                          {relatedArticle.title}
+                        </CardTitle>
+                        <p className="text-muted-foreground text-sm">
+                          {relatedArticle.description}
+                        </p>
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="text-xs text-muted-foreground">
+                            {relatedArticle.readTime}
+                          </span>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(relatedArticle.difficulty)}`}>
+                            {relatedArticle.difficulty}
+                          </span>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </article>
       </div>
     </div>
