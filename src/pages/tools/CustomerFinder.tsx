@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SEO } from '@/components/seo/SEO';
+import SEO from '@/components/seo/SEO';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const CustomerFinder = () => {

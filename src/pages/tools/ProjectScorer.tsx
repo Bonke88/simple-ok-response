@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SEO } from '@/components/seo/SEO';
+import SEO from '@/components/seo/SEO';
 import ProjectScorerForm from '@/components/tools/ProjectScorerForm';
 import ProjectScorerResults from '@/components/tools/ProjectScorerResults';
 import { useState } from 'react';

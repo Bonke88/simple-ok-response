@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { SEO } from '@/components/seo/SEO';
+import SEO from '@/components/seo/SEO';
 import LaunchDiagnosticForm from '@/components/tools/LaunchDiagnosticForm';
 import LaunchDiagnosticResults from '@/components/tools/LaunchDiagnosticResults';
 
