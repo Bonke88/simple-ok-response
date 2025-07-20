@@ -19,31 +19,25 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="content-container">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded" />
-            <span className="font-bold text-xl">GTM Night Shift</span>
-          </Link>
-
-          {/* Desktop Navigation */}
+          {/* Left Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
-              to="/start" 
-              className={`font-medium transition-colors hover:text-accent ${
-                isActive('/start') ? 'text-accent' : 'text-foreground'
+              to="/" 
+              className={`font-medium transition-colors hover:text-primary ${
+                isActive('/') ? 'text-primary border-b-2 border-primary pb-1' : 'text-foreground'
               }`}
             >
-              Start Here
+              Home
             </Link>
 
             {/* Articles Dropdown */}
             <div className="relative">
               <button
-                className={`flex items-center font-medium transition-colors hover:text-accent ${
-                  location.pathname.startsWith('/articles') ? 'text-accent' : 'text-foreground'
+                className={`flex items-center font-medium transition-colors hover:text-primary ${
+                  location.pathname.startsWith('/articles') ? 'text-primary border-b-2 border-primary pb-1' : 'text-foreground'
                 }`}
                 onMouseEnter={() => setIsArticlesOpen(true)}
                 onMouseLeave={() => setIsArticlesOpen(false)}
@@ -73,33 +67,30 @@ const Header = () => {
 
             <Link 
               to="/tools" 
-              className={`font-medium transition-colors hover:text-accent ${
-                isActive('/tools') ? 'text-accent' : 'text-foreground'
+              className={`font-medium transition-colors hover:text-primary ${
+                isActive('/tools') ? 'text-primary border-b-2 border-primary pb-1' : 'text-foreground'
               }`}
             >
-              Tools
+              Free Tools
             </Link>
+          </nav>
 
-            <Link 
-              to="/resources" 
-              className={`font-medium transition-colors hover:text-accent ${
-                isActive('/resources') ? 'text-accent' : 'text-foreground'
-              }`}
+          {/* Center Logo */}
+          <Link to="/" className="flex items-center justify-center flex-1 md:flex-none">
+            <img 
+              src="/lovable-uploads/3222aa60-bd38-45b5-894f-28240705ed60.png" 
+              alt="GTMjon" 
+              className="h-12 w-auto"
+            />
+          </Link>
+
+          {/* Right Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Button 
+              asChild 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-semibold"
             >
-              Resources
-            </Link>
-
-            <Link 
-              to="/about" 
-              className={`font-medium transition-colors hover:text-accent ${
-                isActive('/about') ? 'text-accent' : 'text-foreground'
-              }`}
-            >
-              About
-            </Link>
-
-            <Button asChild className="gtm-button-primary">
-              <Link to="/newsletter">Newsletter</Link>
+              <Link to="/newsletter">Subscribe</Link>
             </Button>
           </nav>
 
@@ -116,11 +107,11 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
             <Link 
-              to="/start" 
+              to="/" 
               className="block py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Start Here
+              Home
             </Link>
 
             <div className="space-y-2">
@@ -142,28 +133,12 @@ const Header = () => {
               className="block py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Tools
+              Free Tools
             </Link>
 
-            <Link 
-              to="/resources" 
-              className="block py-2 font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Resources
-            </Link>
-
-            <Link 
-              to="/about" 
-              className="block py-2 font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-
-            <Button asChild className="gtm-button-primary w-full">
+            <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground w-full rounded-full">
               <Link to="/newsletter" onClick={() => setIsMenuOpen(false)}>
-                Newsletter
+                Subscribe
               </Link>
             </Button>
           </div>
