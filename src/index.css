@@ -3,50 +3,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* GTM Website Design System - Black Theme
+/* GTM Website Design System - Lenny's Newsletter Inspired Theme
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 6.7%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 6.7%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 6.7%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 0 0% 0%;
+    --primary: 0 65% 67%; /* Warm coral/red #ff6b6b */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 6.7%;
+    --secondary: 0 0% 97%; /* Light gray backgrounds #f8f9fa */
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 97%; /* Light gray backgrounds #f8f9fa */
+    --muted-foreground: 220 9% 46%; /* Gray text #6c757d */
 
-    --accent: 217 100% 50%;
+    --accent: 0 65% 67%; /* Match primary coral */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 0%;
+    --border: 220 13% 91%; /* Subtle borders #e9ecef */
+    --input: 220 13% 91%;
+    --ring: 0 65% 67%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* More rounded corners */
 
-    /* GTM Specific Colors */
-    --gtm-black: 0 0% 0%;
-    --gtm-white: 0 0% 100%;
-    --gtm-gray-dark: 0 0% 6.7%;
-    --gtm-gray-medium: 0 0% 40%;
-    --gtm-blue: 217 100% 50%;
-    --gtm-green: 142 76% 36%;
-    --gtm-amber: 43 96% 56%;
+    /* Lenny-inspired colors */
+    --lenny-coral: 0 65% 67%;
+    --lenny-coral-hover: 0 65% 60%;
+    --lenny-purple: 250 69% 65%;
+    --lenny-light-bg: 0 0% 97%;
+    --lenny-text-light: 220 9% 46%;
   }
 }
 
@@ -57,39 +55,290 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-primary;
+    @apply font-bold text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl leading-tight;
+    font-size: 48px;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 56px;
+    }
   }
 
   h2 {
-    @apply text-3xl md:text-4xl leading-tight;
+    font-size: 36px;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 40px;
+    }
   }
 
   h3 {
-    @apply text-2xl md:text-3xl leading-tight;
+    font-size: 24px;
+    margin-bottom: 16px;
+    line-height: 1.3;
   }
 
   p {
-    @apply text-lg leading-relaxed text-foreground;
+    font-size: 18px;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 20px;
   }
 
   .content-container {
-    @apply max-w-[680px] mx-auto px-6;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
   }
 
+  @media (max-width: 768px) {
+    .content-container {
+      padding: 0 20px;
+    }
+  }
+
+  /* Hero Section Styling */
+  .hero-section {
+    background: hsl(var(--background));
+    text-align: center;
+    padding: 80px 20px 60px;
+  }
+
+  .hero-section h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #1a1a1a;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section h1 {
+      font-size: 56px;
+    }
+  }
+
+  .hero-section .subtitle {
+    font-size: 20px;
+    color: hsl(var(--muted-foreground));
+    max-width: 700px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section .subtitle {
+      font-size: 22px;
+    }
+  }
+
+  .social-proof {
+    font-size: 16px;
+    color: hsl(var(--muted-foreground));
+    margin-top: 24px;
+  }
+
+  .social-proof strong {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  /* Button Styling */
   .gtm-button-primary {
-    @apply bg-accent text-accent-foreground hover:bg-accent/90 px-6 py-3 rounded-lg font-medium transition-colors;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-7 py-3.5 rounded-lg font-semibold transition-all duration-200;
+    font-size: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .gtm-button-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
   }
 
   .gtm-button-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors;
+    @apply bg-transparent text-primary border-2 border-primary hover:bg-primary/5 px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+    font-size: 16px;
+  }
+
+  /* Section Styling */
+  section {
+    padding: 80px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .section-header h2 {
+      font-size: 40px;
+    }
+  }
+
+  .section-header p {
+    font-size: 18px;
+    color: hsl(var(--muted-foreground));
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .section-header p {
+      font-size: 20px;
+    }
+  }
+}
+
+@layer components {
+  /* Card Components */
+  .lenny-card {
+    @apply bg-card border border-border rounded-xl p-8 transition-all duration-300;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .lenny-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .lenny-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+  }
+
+  .lenny-card p {
+    color: hsl(var(--muted-foreground));
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .lenny-card a {
+    @apply text-primary font-semibold no-underline hover:underline;
+    font-size: 16px;
+  }
+
+  /* Article Cards */
+  .article-card {
+    @apply bg-card rounded-xl overflow-hidden transition-all duration-300 mb-6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .article-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .article-card-content {
+    @apply p-6;
+  }
+
+  .article-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+  }
+
+  .article-card .meta {
+    @apply flex gap-4 text-sm mb-3;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .article-card .meta span {
+    @apply flex items-center gap-1;
+  }
+
+  .article-card .category {
+    @apply text-primary font-semibold text-sm uppercase tracking-wider;
+  }
+
+  /* Newsletter Section */
+  .newsletter-section {
+    @apply text-center rounded-2xl my-20 p-16;
+    background: #fff5f5;
+  }
+
+  .newsletter-section h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+
+  .newsletter-section p {
+    font-size: 18px;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 32px;
+  }
+
+  .newsletter-form {
+    @apply flex gap-3 max-w-lg mx-auto;
+  }
+
+  @media (max-width: 640px) {
+    .newsletter-form {
+      @apply flex-col;
+    }
+  }
+
+  .newsletter-form input {
+    @apply flex-1 px-5 py-3.5 border-2 border-border rounded-lg text-base transition-colors duration-200 focus:outline-none focus:border-primary;
+  }
+
+  /* Navigation */
+  .navbar {
+    @apply bg-background border-b border-border py-4 sticky top-0 z-50;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .navbar a {
+    @apply text-muted-foreground font-medium no-underline mx-4 text-base transition-colors duration-200 hover:text-primary;
+  }
+
+  .logo {
+    @apply font-extrabold text-2xl text-foreground;
+  }
+
+  /* Footer */
+  .footer-bg {
+    @apply bg-muted/30 border-t border-border;
+  }
+
+  .footer-newsletter-cta {
+    @apply bg-card p-10 rounded-xl mb-10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 }
