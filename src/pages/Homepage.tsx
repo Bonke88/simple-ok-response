@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,38 +48,38 @@ const Homepage = () => {
     }
   ];
 
-  const latestArticles = [
+  const mostPopularArticles = [
     {
-      title: "The Fatal Flaw: Why 99% of Side Projects Make $0",
+      title: "State of the product job market in 2025",
       readTime: "15 min",
-      difficulty: "Uncomfortable but necessary",
-      category: "Picking Winners",
-      publishedDate: "3 days ago",
-      link: "/articles/fatal-flaw"
+      author: "LENNY RACHITSKY",
+      publishedDate: "MAY 13",
+      link: "/articles/fatal-flaw",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop"
     },
     {
-      title: "Anonymous SaaS: How to Launch Without Your Boss Knowing",
+      title: "A guide to AI prototyping for product managers",
       readTime: "12 min",
-      difficulty: "Advanced tactics",
-      category: "Ship It",
-      publishedDate: "1 week ago",
-      link: "/articles/anonymous-saas"
+      author: "COLIN MATTHEWS",
+      publishedDate: "JAN 7",
+      link: "/articles/anonymous-saas",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop"
     },
     {
-      title: "The $1K Validation Framework for Busy Engineers",
+      title: "How Duolingo reignited user growth",
       readTime: "8 min",
-      difficulty: "Beginner friendly",
-      category: "First Customers",
-      publishedDate: "2 weeks ago",
-      link: "/articles/validation-framework"
+      author: "JORGE MAZAL",
+      publishedDate: "FEB 28, 2023",
+      link: "/articles/validation-framework",
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop"
     },
     {
-      title: "Energy Management: Code at 6am or Market at 11pm?",
+      title: "Product manager is an unfair role. So work unfairly.",
       readTime: "10 min",
-      difficulty: "Tactical",
-      category: "Scale",
-      publishedDate: "3 weeks ago",
-      link: "/articles/energy-management"
+      author: "TAL RAVIV",
+      publishedDate: "NOV 12, 2024",
+      link: "/articles/energy-management",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop"
     }
   ];
 
@@ -125,26 +126,87 @@ const Homepage = () => {
         type="website"
       />
       
-      <div className="space-y-20">
-        {/* Hero Section */}
-        <section className="py-20">
-          <div className="content-container text-center">
-            <h1 className="mb-6">
-              GTM advice for corporate engineers building SaaS late at night
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Practical sales & marketing tactics for your 10 hours a week. 
-              No fluff, just what works when the kids are asleep.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Read by 12,000+ engineers at Google, Meta, Microsoft, and more
-            </p>
+      <div className="space-y-16">
+        {/* Featured Article Section - Lenny's Layout */}
+        <section className="py-8">
+          <div className="content-container">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              {/* Left - Image */}
+              <div className="order-2 md:order-1">
+                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500 p-8 text-center min-h-[300px] flex flex-col justify-center">
+                  <div className="bg-white rounded-xl p-6 max-w-sm mx-auto">
+                    <h3 className="text-2xl font-bold text-black mb-2">GTM Night Shift</h3>
+                    <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto mb-4"></div>
+                    <div className="bg-black text-white px-4 py-2 rounded-lg font-bold">
+                      Corporate Engineers
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right - Content */}
+              <div className="order-1 md:order-2">
+                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                  Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
+                </h1>
+                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                  Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids...
+                </p>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>🔒</span>
+                  <span>9 HRS AGO</span>
+                  <span>•</span>
+                  <span>LENNY RACHITSKY</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Most Popular Section */}
+        <section>
+          <div className="content-container">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold">Most Popular</h2>
+              <Link 
+                to="/articles" 
+                className="text-muted-foreground hover:text-foreground font-medium"
+              >
+                VIEW ALL
+              </Link>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {mostPopularArticles.map((article, index) => (
+                <div key={index} className="group">
+                  <Link to={article.link}>
+                    <div className="mb-4 overflow-hidden rounded-lg">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors leading-tight">
+                      {article.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span>🔒</span>
+                      <span>{article.publishedDate}</span>
+                      <span>•</span>
+                      <span>{article.author}</span>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Content Pillars */}
         <section>
           <div className="content-container">
+            <h2 className="mb-8">Core GTM Areas</h2>
             <div className="grid md:grid-cols-2 gap-8">
               {contentPillars.map((pillar, index) => (
                 <Card key={index} className="hover:shadow-lg transition-shadow">
@@ -165,44 +227,6 @@ const Homepage = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Latest Articles */}
-        <section>
-          <div className="content-container">
-            <h2 className="mb-8">Recent Guides</h2>
-            <div className="space-y-6">
-              {latestArticles.map((article, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col space-y-3">
-                      <Link to={article.link}>
-                        <h3 className="text-xl font-semibold hover:text-accent transition-colors">
-                          {article.title}
-                        </h3>
-                      </Link>
-                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                        <span>🕐 {article.readTime}</span>
-                        <span>💪 {article.difficulty}</span>
-                        <span>📁 {article.category}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Published {article.publishedDate}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <div className="text-center mt-8">
-              <Link 
-                to="/articles" 
-                className="text-accent font-medium hover:underline text-lg"
-              >
-                View all articles →
-              </Link>
             </div>
           </div>
         </section>
