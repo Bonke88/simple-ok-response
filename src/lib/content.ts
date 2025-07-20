@@ -1,3 +1,4 @@
+
 export interface Article {
   slug: string;
   title: string;
@@ -479,7 +480,7 @@ If you want to launch anonymously:
 
 Remember: The goal isn't to hide forever. It's to protect yourself during the vulnerable early stages and prove the business works before having difficult conversations with your employer.
 
-Many successful entrepreneurs started this way. The key is doing it legally, carefully, and with proper protection.
+Many successful entrepreneurs started this way. The key is doing it legally, carefully, and with proper protection.`
   }
 ];
 
