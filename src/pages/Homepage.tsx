@@ -18,6 +18,7 @@ import {
   User
 } from 'lucide-react';
 import SEO from '@/components/seo/SEO';
+import PodcastCard from '@/components/cards/PodcastCard';
 
 const Homepage = () => {
   const mostPopularArticles = [
@@ -216,44 +217,20 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* Additional Articles - Lenny's Newsletter Style */}
+        {/* Additional Articles - Using PodcastCard Component */}
         <section className="py-12 bg-gray-50">
           <div className="content-container space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* AI-native startup card */}
-              <div className="group">
-                <Link to="/articles/ai-startup" className="block">
-                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
-                    {/* Podcast-style header */}
-                    <div className="relative bg-gradient-to-br from-orange-400 to-orange-500 p-6 text-center">
-                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 inline-block">
-                        <h4 className="text-lg font-bold text-white mb-2">Lenny's<br/>Podcast</h4>
-                        <img 
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
-                          alt="Dan Shipper"
-                          className="w-16 h-16 rounded-full mx-auto border-2 border-white/50"
-                        />
-                        <p className="text-white text-sm font-medium mt-2">Dan Shipper</p>
-                      </div>
-                    </div>
-                    
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
-                          The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code
-                        </h3>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                          Inside a 15-person company where AI agents do most of the work, how they're building multiple products simultaneously, and what this means for the future of software development.
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
-                          <Calendar className="w-3 h-3" />
-                          <span>JUL 17 • LENNY RACHITSKY</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* AI-native startup card using PodcastCard */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+                guestName="Dan Shipper"
+                episodeTitle="The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code"
+                episodeBlurb="Inside a 15-person company where AI agents do most of the work, how they're building multiple products simultaneously, and what this means for the future of software development."
+                episodeDate="JUL 17"
+                authorName="LENNY RACHITSKY"
+                onClick={() => window.location.href = '/articles/ai-startup'}
+              />
 
               {/* Essential reading card */}
               <div className="group">
@@ -296,47 +273,16 @@ const Homepage = () => {
                 </Link>
               </div>
 
-              {/* Foundation Sprint card */}
-              <div className="group">
-                <Link to="/articles/foundation-sprint" className="block">
-                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
-                    {/* Podcast-style header with two people */}
-                    <div className="relative bg-gradient-to-br from-orange-400 to-orange-500 p-6 text-center">
-                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 inline-block">
-                        <h4 className="text-lg font-bold text-white mb-2">Lenny's<br/>Podcast</h4>
-                        <div className="flex justify-center gap-2">
-                          <img 
-                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" 
-                            alt="Jake Knapp"
-                            className="w-12 h-12 rounded-full border-2 border-white/50"
-                          />
-                          <img 
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
-                            alt="John Zeratsky"
-                            className="w-12 h-12 rounded-full border-2 border-white/50"
-                          />
-                        </div>
-                        <p className="text-white text-xs font-medium mt-2">Jake Knapp & John Zeratsky</p>
-                      </div>
-                    </div>
-                    
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
-                          Rapidly test and validate any startup idea with the 2-day Foundation Sprint
-                        </h3>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                          Inside the Foundation Sprint—a recipe to validate any startup idea in 48 hours, before you build anything.
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
-                          <Calendar className="w-3 h-3" />
-                          <span>JUL 13 • LENNY RACHITSKY</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
+              {/* Foundation Sprint card using PodcastCard */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face"
+                guestName="Jake Knapp & John Zeratsky"
+                episodeTitle="Rapidly test and validate any startup idea with the 2-day Foundation Sprint"
+                episodeBlurb="Inside the Foundation Sprint—a recipe to validate any startup idea in 48 hours, before you build anything."
+                episodeDate="JUL 13"
+                authorName="LENNY RACHITSKY"
+                onClick={() => window.location.href = '/articles/foundation-sprint'}
+              />
             </div>
           </div>
         </section>
