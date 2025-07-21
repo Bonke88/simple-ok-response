@@ -216,39 +216,38 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* Additional Articles - Enhanced 3x3 Grid */}
+        {/* Additional Articles - Lenny's Newsletter Style */}
         <section className="py-12 bg-gray-50">
           <div className="content-container space-y-12">
-            {/* Row 1 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* AI-native startup card */}
               <div className="group">
                 <Link to="/articles/ai-startup" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop" 
-                        alt="AI startup article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-blue-600 text-white border-0 text-xs font-bold">
-                        STARTUP
-                      </Badge>
+                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
+                    {/* Podcast-style header */}
+                    <div className="relative bg-gradient-to-br from-orange-400 to-orange-500 p-6 text-center">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 inline-block">
+                        <h4 className="text-lg font-bold text-white mb-2">Lenny's<br/>Podcast</h4>
+                        <img 
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                          alt="Dan Shipper"
+                          className="w-16 h-16 rounded-full mx-auto border-2 border-white/50"
+                        />
+                        <p className="text-white text-sm font-medium mt-2">Dan Shipper</p>
+                      </div>
                     </div>
+                    
                     <CardContent className="p-6">
                       <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
+                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
                           The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          How one founder built multiple profitable products using only AI tools and no traditional coding.
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          Inside a 15-person company where AI agents do most of the work, how they're building multiple products simultaneously, and what this means for the future of software development.
                         </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>12 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 17</span>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
+                          <Calendar className="w-3 h-3" />
+                          <span>JUL 17 • LENNY RACHITSKY</span>
                         </div>
                       </div>
                     </CardContent>
@@ -256,34 +255,40 @@ const Homepage = () => {
                 </Link>
               </div>
 
+              {/* Essential reading card */}
               <div className="group">
                 <Link to="/articles/essential-reading" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop" 
-                        alt="Essential reading article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-purple-600 text-white border-0 text-xs font-bold">
-                        RESOURCES
-                      </Badge>
+                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
+                    {/* Card deck illustration */}
+                    <div className="relative bg-gradient-to-br from-orange-100 to-orange-200 p-8 text-center min-h-[180px] flex items-center justify-center">
+                      <div className="relative">
+                        {/* Card stack illustration */}
+                        <div className="relative">
+                          <div className="w-32 h-20 bg-white rounded-lg border-2 border-gray-300 shadow-sm transform rotate-6"></div>
+                          <div className="w-32 h-20 bg-white rounded-lg border-2 border-gray-300 shadow-sm absolute top-0 left-0 transform rotate-3"></div>
+                          <div className="w-32 h-20 bg-orange-400 rounded-lg border-2 border-gray-300 shadow-lg absolute top-0 left-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <h4 className="text-sm font-bold text-white">Essential reading</h4>
+                              <h4 className="text-sm font-bold text-gray-900">for product</h4>
+                              <h4 className="text-sm font-bold text-gray-900">builders</h4>
+                              <p className="text-xs text-gray-700 mt-1">PART 1</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                    
                     <CardContent className="p-6">
                       <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-purple-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
+                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
                           Essential reading for product builders—part 1
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          Curated list of must-read books and articles that every product builder should have on their shelf.
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          7 timeless essays you likely haven't read but definitely should. These foundational pieces will change how you think about building products.
                         </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>8 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 15</span>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
+                          <Calendar className="w-3 h-3" />
+                          <span>JUL 15 • LENNY RACHITSKY</span>
                         </div>
                       </div>
                     </CardContent>
@@ -291,250 +296,41 @@ const Homepage = () => {
                 </Link>
               </div>
 
+              {/* Foundation Sprint card */}
               <div className="group">
                 <Link to="/articles/foundation-sprint" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop" 
-                        alt="Foundation sprint article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-green-600 text-white border-0 text-xs font-bold">
-                        VALIDATION
-                      </Badge>
+                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
+                    {/* Podcast-style header with two people */}
+                    <div className="relative bg-gradient-to-br from-orange-400 to-orange-500 p-6 text-center">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 inline-block">
+                        <h4 className="text-lg font-bold text-white mb-2">Lenny's<br/>Podcast</h4>
+                        <div className="flex justify-center gap-2">
+                          <img 
+                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" 
+                            alt="Jake Knapp"
+                            className="w-12 h-12 rounded-full border-2 border-white/50"
+                          />
+                          <img 
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                            alt="John Zeratsky"
+                            className="w-12 h-12 rounded-full border-2 border-white/50"
+                          />
+                        </div>
+                        <p className="text-white text-xs font-medium mt-2">Jake Knapp & John Zeratsky</p>
+                      </div>
                     </div>
+                    
                     <CardContent className="p-6">
                       <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-green-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
+                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
                           Rapidly test and validate any startup idea with the 2-day Foundation Sprint
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          A proven framework to validate your startup idea in just 48 hours before you write a single line of code.
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          Inside the Foundation Sprint—a recipe to validate any startup idea in 48 hours, before you build anything.
                         </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>15 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 13</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </div>
-
-            {/* Row 2 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group">
-                <Link to="/articles/product-metrics" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop" 
-                        alt="Product metrics article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-orange-600 text-white border-0 text-xs font-bold">
-                        METRICS
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          The most important metrics for every type of business
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          Stop tracking vanity metrics. Here are the KPIs that actually matter for different business models.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>10 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 10</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-
-              <div className="group">
-                <Link to="/articles/user-research" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" 
-                        alt="User research article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-indigo-600 text-white border-0 text-xs font-bold">
-                        RESEARCH
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-indigo-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          A comprehensive guide to user research methods
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          From interviews to analytics: the complete toolkit for understanding your users and their needs.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>18 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 8</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-
-              <div className="group">
-                <Link to="/articles/growth-loops" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop" 
-                        alt="Growth loops article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-pink-600 text-white border-0 text-xs font-bold">
-                        GROWTH
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-pink-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          Building sustainable growth loops that scale
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          How to create viral growth mechanisms that compound over time and drive exponential user acquisition.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>14 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 5</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </div>
-
-            {/* Row 3 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group">
-                <Link to="/articles/pricing-strategy" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop" 
-                        alt="Pricing strategy article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-emerald-600 text-white border-0 text-xs font-bold">
-                        PRICING
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          The ultimate guide to SaaS pricing strategies
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          From freemium to value-based pricing: choosing the right model for your SaaS business.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>16 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 3</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-
-              <div className="group">
-                <Link to="/articles/customer-feedback" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop" 
-                        alt="Customer feedback article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-cyan-600 text-white border-0 text-xs font-bold">
-                        FEEDBACK
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-cyan-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          How to collect and act on customer feedback effectively
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          Turn customer insights into product improvements with these proven feedback collection strategies.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>11 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUL 1</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-
-              <div className="group">
-                <Link to="/articles/product-roadmap" className="block">
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden bg-white">
-                    <div className="relative">
-                      <img 
-                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop" 
-                        alt="Product roadmap article"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      <Badge className="absolute top-4 left-4 bg-violet-600 text-white border-0 text-xs font-bold">
-                        ROADMAP
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-violet-600 transition-colors leading-tight line-clamp-2 min-h-[56px]">
-                          Building product roadmaps that actually drive results
-                        </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          Stop building features nobody wants. Here's how to create roadmaps that align with business goals.
-                        </p>
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>13 min</span>
-                          </div>
-                          <span className="text-xs font-bold text-gray-700">JUN 28</span>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
+                          <Calendar className="w-3 h-3" />
+                          <span>JUL 13 • LENNY RACHITSKY</span>
                         </div>
                       </div>
                     </CardContent>
