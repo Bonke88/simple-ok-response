@@ -126,18 +126,18 @@ const Homepage = () => {
         type="website"
       />
       
-      <div className="space-y-16">
-        {/* Featured Article Section - Lenny's Layout */}
-        <section className="py-8">
+      <div className="space-y-8">
+        {/* Featured Article Section - Compact Lenny's Layout */}
+        <section className="py-4">
           <div className="content-container">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-6 items-center">
               {/* Left - Image */}
               <div className="order-2 md:order-1">
-                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500 p-8 text-center min-h-[300px] flex flex-col justify-center">
-                  <div className="bg-white rounded-xl p-6 max-w-sm mx-auto">
-                    <h3 className="text-2xl font-bold text-black mb-2">GTM Night Shift</h3>
-                    <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                    <div className="bg-black text-white px-4 py-2 rounded-lg font-bold">
+                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500 p-6 text-center min-h-[200px] flex flex-col justify-center">
+                  <div className="bg-white rounded-xl p-4 max-w-xs mx-auto">
+                    <h3 className="text-lg font-bold text-black mb-2">GTM Night Shift</h3>
+                    <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-3"></div>
+                    <div className="bg-black text-white px-3 py-1 rounded-lg font-bold text-sm">
                       Corporate Engineers
                     </div>
                   </div>
@@ -146,13 +146,13 @@ const Homepage = () => {
               
               {/* Right - Content */}
               <div className="order-1 md:order-2">
-                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
-                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-base text-muted-foreground mb-3 leading-relaxed">
                   Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids...
                 </p>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
                   <span>🔒</span>
                   <span>9 HRS AGO</span>
                   <span>•</span>
@@ -163,34 +163,34 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* Most Popular Section */}
+        {/* Most Popular Section - Compact */}
         <section>
           <div className="content-container">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Most Popular</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Most Popular</h2>
               <Link 
                 to="/articles" 
-                className="text-muted-foreground hover:text-foreground font-medium"
+                className="text-muted-foreground hover:text-foreground font-medium text-sm"
               >
                 VIEW ALL
               </Link>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {mostPopularArticles.map((article, index) => (
                 <div key={index} className="group">
                   <Link to={article.link}>
-                    <div className="mb-4 overflow-hidden rounded-lg">
+                    <div className="mb-2 overflow-hidden rounded-lg">
                       <img 
                         src={article.image} 
                         alt={article.title}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors leading-tight">
+                    <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight">
                       {article.title}
                     </h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <span>🔒</span>
                       <span>{article.publishedDate}</span>
                       <span>•</span>
@@ -206,21 +206,21 @@ const Homepage = () => {
         {/* Content Pillars */}
         <section>
           <div className="content-container">
-            <h2 className="mb-8">Core GTM Areas</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+            <h2 className="mb-6 text-xl font-bold">Core GTM Areas</h2>
+            <div className="grid md:grid-cols-2 gap-6">
               {contentPillars.map((pillar, index) => (
                 <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3 mb-4">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center space-x-3 mb-2">
                       {pillar.icon}
                     </div>
-                    <CardTitle className="text-xl">{pillar.title}</CardTitle>
+                    <CardTitle className="text-lg">{pillar.title}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">{pillar.description}</p>
+                  <CardContent className="pt-0">
+                    <p className="text-muted-foreground mb-3 text-sm">{pillar.description}</p>
                     <Link 
                       to={pillar.link}
-                      className="text-accent font-medium hover:underline"
+                      className="text-accent font-medium hover:underline text-sm"
                     >
                       {pillar.articleCount} articles →
                     </Link>
@@ -234,28 +234,28 @@ const Homepage = () => {
         {/* Tools Preview */}
         <section>
           <div className="content-container">
-            <h2 className="mb-8">Tools That Save Your Weekends</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h2 className="mb-6 text-xl font-bold">Tools That Save Your Weekends</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {tools.map((tool, index) => (
                 <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
+                  <CardHeader className="pb-3">
                     <div className="flex items-center space-x-3">
                       <div className="p-2 bg-accent/10 rounded-lg">
                         {tool.icon}
                       </div>
-                      <CardTitle className="text-lg">{tool.name}</CardTitle>
+                      <CardTitle className="text-base">{tool.name}</CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground text-sm">{tool.description}</p>
+                  <CardContent className="pt-0">
+                    <p className="text-muted-foreground text-xs">{tool.description}</p>
                   </CardContent>
                 </Card>
               ))}
             </div>
-            <div className="text-center mt-8">
+            <div className="text-center mt-6">
               <Link 
                 to="/tools" 
-                className="text-accent font-medium hover:underline text-lg"
+                className="text-accent font-medium hover:underline text-base"
               >
                 Try all tools →
               </Link>
