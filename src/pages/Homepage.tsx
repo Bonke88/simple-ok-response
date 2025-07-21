@@ -232,46 +232,16 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/ai-startup'}
               />
 
-              {/* Essential reading card */}
-              <div className="group">
-                <Link to="/articles/essential-reading" className="block">
-                  <Card className="h-full hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden bg-white">
-                    {/* Card deck illustration */}
-                    <div className="relative bg-gradient-to-br from-orange-100 to-orange-200 p-8 text-center min-h-[180px] flex items-center justify-center">
-                      <div className="relative">
-                        {/* Card stack illustration */}
-                        <div className="relative">
-                          <div className="w-32 h-20 bg-white rounded-lg border-2 border-gray-300 shadow-sm transform rotate-6"></div>
-                          <div className="w-32 h-20 bg-white rounded-lg border-2 border-gray-300 shadow-sm absolute top-0 left-0 transform rotate-3"></div>
-                          <div className="w-32 h-20 bg-orange-400 rounded-lg border-2 border-gray-300 shadow-lg absolute top-0 left-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <h4 className="text-sm font-bold text-white">Essential reading</h4>
-                              <h4 className="text-sm font-bold text-gray-900">for product</h4>
-                              <h4 className="text-sm font-bold text-gray-900">builders</h4>
-                              <p className="text-xs text-gray-700 mt-1">PART 1</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors leading-tight">
-                          Essential reading for product builders—part 1
-                        </h3>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                          7 timeless essays you likely haven't read but definitely should. These foundational pieces will change how you think about building products.
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
-                          <Calendar className="w-3 h-3" />
-                          <span>JUL 15 • LENNY RACHITSKY</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
+              {/* Essential reading card using PodcastCard */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                guestName="Essential Reading"
+                episodeTitle="Essential reading for product builders—part 1"
+                episodeBlurb="7 timeless essays you likely haven't read but definitely should. These foundational pieces will change how you think about building products."
+                episodeDate="JUL 15"
+                authorName="LENNY RACHITSKY"
+                onClick={() => window.location.href = '/articles/essential-reading'}
+              />
 
               {/* Foundation Sprint card using PodcastCard */}
               <PodcastCard
