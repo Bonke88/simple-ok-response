@@ -302,6 +302,49 @@ const Homepage = () => {
             </div>
           </div>
         </section>
+
+        {/* Third Row of Podcast Cards */}
+        <section className="py-8 bg-white">
+          <div className="content-container space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* Fundraising card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+                guestName="Alex Turner"
+                episodeTitle="The fundraising playbook: How to raise your Series A in 2024"
+                episodeBlurb="Inside the complete strategy for raising venture capital, from deck creation to investor meetings and term sheet negotiations."
+                episodeDate="JUL 2"
+                authorName="LENNY RACHITSKY"
+                category="FUNDRAISING"
+                onClick={() => window.location.href = '/articles/fundraising-playbook'}
+              />
+
+              {/* Team building card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face"
+                guestName="Rachel Kim"
+                episodeTitle="How to build a high-performing product team from scratch"
+                episodeBlurb="The complete guide to hiring, structuring, and scaling product teams that ship great products consistently."
+                episodeDate="JUN 30"
+                authorName="LENNY RACHITSKY"
+                category="TEAM"
+                onClick={() => window.location.href = '/articles/product-team-building'}
+              />
+
+              {/* Product design card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                guestName="David Park"
+                episodeTitle="Design systems that scale: Building consistency across products"
+                episodeBlurb="How to create and maintain design systems that enable teams to move fast while maintaining quality and consistency."
+                episodeDate="JUN 28"
+                authorName="LENNY RACHITSKY"
+                category="DESIGN"
+                onClick={() => window.location.href = '/articles/design-systems'}
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
