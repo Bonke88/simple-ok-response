@@ -66,9 +66,9 @@ const Homepage = () => {
         {/* Featured Article Section - Compressed Layout */}
         <section className="py-3">
           <div className="content-container">
-            <div className="flex gap-4 items-center">
+            <div className="grid md:grid-cols-2 gap-4 items-center">
               {/* Left - Image */}
-              <div className="flex-shrink-0">
+              <div className="order-2 md:order-1">
                 <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 p-6 text-center min-h-[240px] flex flex-col justify-center">
                   <div className="bg-white rounded-xl p-4 max-w-sm mx-auto shadow-lg">
                     <div className="flex items-center justify-center mb-3">
@@ -88,7 +88,7 @@ const Homepage = () => {
               </div>
               
               {/* Right - Content */}
-              <div className="flex-1 ml-16">
+              <div className="order-1 md:order-2 w-[70%] ml-16">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
