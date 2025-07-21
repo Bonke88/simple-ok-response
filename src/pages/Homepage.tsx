@@ -88,7 +88,7 @@ const Homepage = () => {
               </div>
               
               {/* Right - Content */}
-              <div className="order-1 md:order-2 w-[70%] ml-8">
+              <div className="order-1 md:order-2 w-[70%] ml-16">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
