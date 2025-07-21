@@ -259,6 +259,49 @@ const Homepage = () => {
             </div>
           </div>
         </section>
+
+        {/* Second Row of Podcast Cards */}
+        <section className="py-12 bg-white">
+          <div className="content-container space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* Product management card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1494790108755-2616b332c446?w=80&h=80&fit=crop&crop=face"
+                guestName="Sarah Chen"
+                episodeTitle="Product-market fit isn't binary: How to think about it as a spectrum"
+                episodeBlurb="Why PMF is a continuous journey rather than a destination, and practical frameworks for measuring your progress along the spectrum."
+                episodeDate="JUL 10"
+                authorName="LENNY RACHITSKY"
+                category="STRATEGY"
+                onClick={() => window.location.href = '/articles/product-market-fit'}
+              />
+
+              {/* Growth strategy card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                guestName="Marcus Johnson"
+                episodeTitle="How to build a growth engine that compounds over time"
+                episodeBlurb="Inside the playbook for creating sustainable growth loops that generate exponential returns rather than linear growth."
+                episodeDate="JUL 8"
+                authorName="LENNY RACHITSKY"
+                category="GROWTH"
+                onClick={() => window.location.href = '/articles/growth-engine'}
+              />
+
+              {/* User research card */}
+              <PodcastCard
+                guestPhoto="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
+                guestName="Emma Rodriguez"
+                episodeTitle="Stop asking users what they want: The art of behavioral research"
+                episodeBlurb="Why traditional user surveys fail and how to uncover real user needs through behavioral research and observational studies."
+                episodeDate="JUL 5"
+                authorName="LENNY RACHITSKY"
+                category="RESEARCH"
+                onClick={() => window.location.href = '/articles/behavioral-research'}
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
