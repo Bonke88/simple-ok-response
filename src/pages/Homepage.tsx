@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   TrendingUp, 
   Rocket, 
@@ -15,7 +15,8 @@ import {
   Search,
   Shield,
   Clock,
-  User
+  User,
+  ChevronRight
 } from 'lucide-react';
 import SEO from '@/components/seo/SEO';
 import PodcastCard from '@/components/cards/PodcastCard';
@@ -306,7 +307,7 @@ const Homepage = () => {
         {/* Third Row of Podcast Cards */}
         <section className="py-8 bg-white">
           <div className="content-container space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 justify-items-center">
               {/* Fundraising card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
@@ -330,6 +331,19 @@ const Homepage = () => {
                 category="TEAM"
                 onClick={() => window.location.href = '/articles/product-team-building'}
               />
+
+              {/* All Articles Button */}
+              <div className="flex items-start justify-center pt-6">
+                <Button
+                  asChild
+                  className="bg-[#F2F3F4] hover:bg-[#E0E1E2] active:bg-[#D5D6D7] text-[#1A1A1A] font-medium text-base rounded-lg px-5 py-2.5 transition-colors duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-[#2F81F7] focus-visible:ring-offset-2 border-0 shadow-none"
+                >
+                  <Link to="/articles" className="flex items-center gap-1">
+                    All articles
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
 
               {/* Product design card */}
               <PodcastCard
