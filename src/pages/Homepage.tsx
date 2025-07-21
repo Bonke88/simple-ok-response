@@ -218,7 +218,7 @@ const Homepage = () => {
         </section>
 
         {/* Additional Articles - Using PodcastCard Component */}
-        <section className="py-12 bg-gray-50">
+        <section className="py-8 bg-white">
           <div className="content-container space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
               {/* AI-native startup card using PodcastCard */}
@@ -261,7 +261,7 @@ const Homepage = () => {
         </section>
 
         {/* Second Row of Podcast Cards */}
-        <section className="py-12 bg-white">
+        <section className="py-8 bg-white">
           <div className="content-container space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
               {/* Product management card */}
