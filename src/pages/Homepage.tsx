@@ -130,11 +130,8 @@ const Homepage = () => {
                       <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3">
                         {article.title}
                       </h3>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <span className="text-sm">🔒</span>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground">
                         <span className="font-bold">{article.publishedDate}</span>
-                        <span>•</span>
-                        <span className="font-bold">{article.author}</span>
                       </div>
                     </div>
                   </Link>
