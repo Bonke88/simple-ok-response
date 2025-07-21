@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -69,7 +68,7 @@ const Homepage = () => {
             <div className="grid md:grid-cols-2 gap-4 items-center">
               {/* Left - Image */}
               <div className="order-2 md:order-1">
-                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 p-6 text-center min-h-[240px] flex flex-col justify-center">
+                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 p-6 text-center min-h-[288px] flex flex-col justify-center">
                   <div className="bg-white rounded-xl p-4 max-w-sm mx-auto shadow-lg">
                     <div className="flex items-center justify-center mb-3">
                       <img 
