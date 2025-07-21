@@ -157,15 +157,11 @@ const PodcastCard: React.FC<PodcastCardProps> = ({
         </p>
       </div>
       
-      {/* Metadata Footer Row */}
+      {/* Metadata Footer Row - Date Only */}
       <div 
-        className="flex items-center gap-2"
+        className="flex justify-center"
         style={{ width: '70%', margin: '0 auto' }}
       >
-        <Lock 
-          size={12} 
-          style={{ color: '#969AA2' }}
-        />
         <span 
           style={{
             fontFamily: 'Inter, system-ui, sans-serif',
@@ -177,26 +173,6 @@ const PodcastCard: React.FC<PodcastCardProps> = ({
           }}
         >
           {episodeDate}
-        </span>
-        <span 
-          style={{
-            width: '5px',
-            height: '5px',
-            backgroundColor: '#969AA2',
-            borderRadius: '50%'
-          }}
-        />
-        <span 
-          className="hover:text-[#2F81F7] transition-colors duration-200 cursor-pointer"
-          style={{
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontSize: '12px',
-            fontWeight: '600',
-            color: '#969AA2',
-            letterSpacing: '0.2px'
-          }}
-        >
-          {authorName}
         </span>
       </div>
     </div>
