@@ -142,6 +142,219 @@ const Homepage = () => {
             </div>
           </div>
         </section>
+
+        {/* Light Divider */}
+        <section className="py-6">
+          <div className="content-container">
+            <div className="w-full h-px bg-border"></div>
+          </div>
+        </section>
+
+        {/* Additional Articles - 3 rows of 3 cards */}
+        <section className="py-0">
+          <div className="content-container space-y-8">
+            {/* Row 1 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="group">
+                <Link to="/articles/ai-startup" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop" 
+                        alt="AI startup article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 17</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/essential-reading" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop" 
+                        alt="Essential reading article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        Essential reading for product builders—part 1
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 15</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/foundation-sprint" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop" 
+                        alt="Foundation sprint article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        Rapidly test and validate any startup idea with the 2-day Foundation Sprint
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 13</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Row 2 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="group">
+                <Link to="/articles/product-metrics" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=200&fit=crop" 
+                        alt="Product metrics article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        The most important metrics for every type of business
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 10</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/user-research" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" 
+                        alt="User research article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        A comprehensive guide to user research methods
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 8</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/growth-loops" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop" 
+                        alt="Growth loops article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        Building sustainable growth loops that scale
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 5</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Row 3 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="group">
+                <Link to="/articles/pricing-strategy" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop" 
+                        alt="Pricing strategy article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        The ultimate guide to SaaS pricing strategies
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 3</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/customer-feedback" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop" 
+                        alt="Customer feedback article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        How to collect and act on customer feedback effectively
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUL 1</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <div className="group">
+                <Link to="/articles/product-roadmap" className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-2">
+                      <img 
+                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop" 
+                        alt="Product roadmap article"
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                        Building product roadmaps that actually drive results
+                      </h3>
+                      <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                        <span className="font-bold">JUN 28</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
