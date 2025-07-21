@@ -229,6 +229,7 @@ const Homepage = () => {
                 episodeBlurb="Inside a 15-person company where AI agents do most of the work, how they're building multiple products simultaneously, and what this means for the future of software development."
                 episodeDate="JUL 17"
                 authorName="LENNY RACHITSKY"
+                category="AI & TECH"
                 onClick={() => window.location.href = '/articles/ai-startup'}
               />
 
@@ -240,6 +241,7 @@ const Homepage = () => {
                 episodeBlurb="7 timeless essays you likely haven't read but definitely should. These foundational pieces will change how you think about building products."
                 episodeDate="JUL 15"
                 authorName="LENNY RACHITSKY"
+                category="READING"
                 onClick={() => window.location.href = '/articles/essential-reading'}
               />
 
@@ -251,6 +253,7 @@ const Homepage = () => {
                 episodeBlurb="Inside the Foundation Sprint—a recipe to validate any startup idea in 48 hours, before you build anything."
                 episodeDate="JUL 13"
                 authorName="LENNY RACHITSKY"
+                category="VALIDATION"
                 onClick={() => window.location.href = '/articles/foundation-sprint'}
               />
             </div>

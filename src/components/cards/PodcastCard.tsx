@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Lock } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface PodcastCardProps {
   guestPhoto: string;
@@ -9,6 +10,7 @@ interface PodcastCardProps {
   episodeBlurb: string;
   episodeDate: string;
   authorName?: string;
+  category?: string;
   onClick?: () => void;
 }
 
@@ -19,6 +21,7 @@ const PodcastCard: React.FC<PodcastCardProps> = ({
   episodeBlurb,
   episodeDate,
   authorName = "LENNY RACHITSKY",
+  category,
   onClick
 }) => {
   return (
@@ -56,6 +59,23 @@ const PodcastCard: React.FC<PodcastCardProps> = ({
             overflow: 'hidden'
           }}
         >
+          {/* Category Badge */}
+          {category && (
+            <Badge 
+              className="absolute top-3 left-3 text-xs font-semibold"
+              style={{
+                backgroundColor: '#969AA2',
+                color: 'white',
+                border: 'none',
+                padding: '4px 8px',
+                fontSize: '11px',
+                fontWeight: '600',
+                letterSpacing: '0.5px'
+              }}
+            >
+              {category}
+            </Badge>
+          )}
           {/* Lenny's Podcast Text */}
           <div 
             className="absolute top-0 left-0 right-0 text-center pt-4"
