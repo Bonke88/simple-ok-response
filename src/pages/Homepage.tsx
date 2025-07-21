@@ -87,14 +87,14 @@ const Homepage = () => {
               </div>
               
               {/* Right - Content */}
-              <div className="order-1 md:order-2 w-[84%] ml-16">
+              <div className="order-1 md:order-2 w-[63%] ml-16">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
                 <p className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed">
                   Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids about the future of work in an AI-driven world.
                 </p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center justify-center text-xs text-muted-foreground">
                   <span className="font-bold">9 HRS AGO</span>
                 </div>
               </div>
