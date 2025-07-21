@@ -118,20 +118,22 @@ const Homepage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {mostPopularArticles.map((article, index) => (
                 <div key={index} className="group">
-                  <Link to={article.link} className="block hover:bg-muted/20 p-2 rounded-lg transition-colors">
-                    <div className="mb-2">
-                      <img 
-                        src={article.image} 
-                        alt={article.title}
-                        className="w-full h-32 object-cover rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3">
-                        {article.title}
-                      </h3>
-                      <div className="flex items-center justify-center text-xs text-muted-foreground">
-                        <span className="font-bold">{article.publishedDate}</span>
+                  <Link to={article.link} className="block hover:bg-muted/20 p-2 rounded-lg transition-colors h-full">
+                    <div className="flex flex-col h-full">
+                      <div className="mb-2">
+                        <img 
+                          src={article.image} 
+                          alt={article.title}
+                          className="w-full h-32 object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="flex flex-col flex-grow">
+                        <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-3 flex-grow">
+                          {article.title}
+                        </h3>
+                        <div className="flex items-center justify-center text-xs text-muted-foreground mt-auto">
+                          <span className="font-bold">{article.publishedDate}</span>
+                        </div>
                       </div>
                     </div>
                   </Link>
