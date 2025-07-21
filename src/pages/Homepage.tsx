@@ -126,18 +126,18 @@ const Homepage = () => {
         type="website"
       />
       
-      <div className="space-y-8">
-        {/* Featured Article Section - Compact Lenny's Layout */}
-        <section className="py-4">
+      <div className="space-y-6">
+        {/* Featured Article Section - Ultra Compact */}
+        <section className="py-0">
           <div className="content-container">
-            <div className="grid md:grid-cols-2 gap-6 items-center">
+            <div className="grid md:grid-cols-2 gap-4 items-center">
               {/* Left - Image */}
               <div className="order-2 md:order-1">
-                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500 p-6 text-center min-h-[200px] flex flex-col justify-center">
-                  <div className="bg-white rounded-xl p-4 max-w-xs mx-auto">
-                    <h3 className="text-lg font-bold text-black mb-2">GTM Night Shift</h3>
-                    <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-3"></div>
-                    <div className="bg-black text-white px-3 py-1 rounded-lg font-bold text-sm">
+                <div className="rounded-lg overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500 p-4 text-center min-h-[160px] flex flex-col justify-center">
+                  <div className="bg-white rounded-lg p-3 max-w-xs mx-auto">
+                    <h3 className="text-sm font-bold text-black mb-1">GTM Night Shift</h3>
+                    <div className="w-12 h-12 bg-gray-300 rounded-full mx-auto mb-2"></div>
+                    <div className="bg-black text-white px-2 py-1 rounded text-xs font-bold">
                       Corporate Engineers
                     </div>
                   </div>
@@ -146,13 +146,13 @@ const Homepage = () => {
               
               {/* Right - Content */}
               <div className="order-1 md:order-2">
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight">
+                <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
-                <p className="text-base text-muted-foreground mb-3 leading-relaxed">
+                <p className="text-sm text-muted-foreground mb-2 leading-relaxed">
                   Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids...
                 </p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span>🔒</span>
                   <span>9 HRS AGO</span>
                   <span>•</span>
@@ -166,8 +166,8 @@ const Homepage = () => {
         {/* Most Popular Section - Compact */}
         <section>
           <div className="content-container">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Most Popular</h2>
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-lg font-bold">Most Popular</h2>
               <Link 
                 to="/articles" 
                 className="text-muted-foreground hover:text-foreground font-medium text-sm"
@@ -176,7 +176,7 @@ const Homepage = () => {
               </Link>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
               {mostPopularArticles.map((article, index) => (
                 <div key={index} className="group">
                   <Link to={article.link}>
@@ -184,10 +184,10 @@ const Homepage = () => {
                       <img 
                         src={article.image} 
                         alt={article.title}
-                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-28 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <h3 className="font-bold text-sm mb-2 group-hover:text-primary transition-colors leading-tight">
+                    <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
                       {article.title}
                     </h3>
                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
