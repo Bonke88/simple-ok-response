@@ -24,7 +24,7 @@ const Homepage = () => {
       author: "LENNY RACHITSKY",
       publishedDate: "MAY 13",
       link: "/articles/fatal-flaw",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=80&h=80&fit=crop"
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
     },
     {
       title: "A guide to AI prototyping for product managers",
@@ -32,7 +32,7 @@ const Homepage = () => {
       author: "COLIN MATTHEWS",
       publishedDate: "JAN 7",
       link: "/articles/anonymous-saas",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=80&h=80&fit=crop"
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
     },
     {
       title: "How Duolingo reignited user growth",
@@ -40,7 +40,7 @@ const Homepage = () => {
       author: "JORGE MAZAL",
       publishedDate: "FEB 28, 2023",
       link: "/articles/validation-framework",
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=80&h=80&fit=crop"
+      image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=60&h=60&fit=crop&crop=face"
     },
     {
       title: "Product manager is an unfair role. So work unfairly.",
@@ -48,7 +48,7 @@ const Homepage = () => {
       author: "TAL RAVIV",
       publishedDate: "NOV 12, 2024",
       link: "/articles/energy-management",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=80&h=80&fit=crop"
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
     }
   ];
 
@@ -62,25 +62,25 @@ const Homepage = () => {
         type="website"
       />
       
-      <div className="space-y-1">
+      <div className="space-y-0">
         {/* Featured Article Section - Lenny Style */}
-        <section className="py-8">
+        <section className="py-6">
           <div className="content-container">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-6 items-center">
               {/* Left - Image */}
               <div className="order-2 md:order-1">
-                <div className="rounded-xl overflow-hidden bg-gray-100 p-8 text-center min-h-[280px] flex flex-col justify-center">
-                  <div className="bg-white rounded-lg p-6 max-w-sm mx-auto shadow-sm">
+                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 p-8 text-center min-h-[300px] flex flex-col justify-center">
+                  <div className="bg-white rounded-xl p-6 max-w-sm mx-auto shadow-lg">
                     <div className="flex items-center justify-center mb-4">
                       <img 
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
-                        alt="Host" 
-                        className="w-16 h-16 rounded-full object-cover"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                        alt="Jon Matthews" 
+                        className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                       />
                     </div>
-                    <h3 className="text-lg font-bold text-black mb-2">GTM Night Shift</h3>
-                    <p className="text-sm text-gray-600 mb-3">With Jon Matthews</p>
-                    <div className="bg-black text-white px-3 py-1.5 rounded-full text-sm font-semibold">
+                    <h3 className="text-xl font-bold text-black mb-2">GTM Night Shift</h3>
+                    <p className="text-sm text-gray-600 mb-4">With Jon Matthews</p>
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
                       Corporate Engineers
                     </div>
                   </div>
@@ -89,17 +89,17 @@ const Homepage = () => {
               
               {/* Right - Content */}
               <div className="order-1 md:order-2">
-                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">
                   Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-xl md:text-2xl text-muted-foreground mb-6 leading-relaxed">
                   Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids about the future of work in an AI-driven world.
                 </p>
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <span className="text-lg">🔒</span>
-                  <span className="font-semibold">9 HRS AGO</span>
+                <div className="flex items-center gap-3 text-base text-muted-foreground">
+                  <span className="text-xl">🔒</span>
+                  <span className="font-bold">9 HRS AGO</span>
                   <span>•</span>
-                  <span className="font-semibold">LENNY RACHITSKY</span>
+                  <span className="font-bold">LENNY RACHITSKY</span>
                 </div>
               </div>
             </div>
@@ -107,38 +107,38 @@ const Homepage = () => {
         </section>
 
         {/* Most Popular Section - Lenny Style */}
-        <section className="py-2">
+        <section className="py-0">
           <div className="content-container">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Most Popular</h2>
               <Link 
                 to="/articles" 
-                className="text-muted-foreground hover:text-foreground font-semibold text-sm"
+                className="text-muted-foreground hover:text-foreground font-bold text-sm"
               >
                 VIEW ALL
               </Link>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-2">
               {mostPopularArticles.map((article, index) => (
-                <div key={index} className="group border-b border-border pb-4 last:border-b-0">
-                  <Link to={article.link} className="flex items-start gap-4 hover:bg-muted/30 p-3 rounded-lg transition-colors">
+                <div key={index} className="group border-b border-border pb-3 last:border-b-0">
+                  <Link to={article.link} className="flex items-center gap-4 hover:bg-muted/20 p-2 rounded-lg transition-colors">
                     <div className="flex-shrink-0">
                       <img 
                         src={article.image} 
                         alt={article.title}
-                        className="w-16 h-16 object-cover rounded-lg"
+                        className="w-12 h-12 object-cover rounded-lg"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors leading-tight">
+                      <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors leading-tight">
                         {article.title}
                       </h3>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <span className="text-base">🔒</span>
-                        <span className="font-semibold">{article.publishedDate}</span>
+                        <span className="font-bold">{article.publishedDate}</span>
                         <span>•</span>
-                        <span className="font-semibold">{article.author}</span>
+                        <span className="font-bold">{article.author}</span>
                       </div>
                     </div>
                   </Link>
