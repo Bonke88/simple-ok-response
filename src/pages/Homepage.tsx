@@ -95,10 +95,7 @@ const Homepage = () => {
                   Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids about the future of work in an AI-driven world.
                 </p>
                 <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="text-lg">🔒</span>
                   <span className="font-bold">9 HRS AGO</span>
-                  <span>•</span>
-                  <span className="font-bold">LENNY RACHITSKY</span>
                 </div>
               </div>
             </div>
