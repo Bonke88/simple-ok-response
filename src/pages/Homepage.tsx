@@ -126,9 +126,9 @@ const Homepage = () => {
         type="website"
       />
       
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Featured Article Section - Ultra Compact */}
-        <section className="py-0">
+        <section className="py-4">
           <div className="content-container">
             <div className="grid md:grid-cols-2 gap-4 items-center">
               {/* Left - Image */}
