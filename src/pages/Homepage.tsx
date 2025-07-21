@@ -15,8 +15,7 @@ import {
   Search,
   Shield,
   Clock,
-  User,
-  ChevronRight
+  User
 } from 'lucide-react';
 import SEO from '@/components/seo/SEO';
 import PodcastCard from '@/components/cards/PodcastCard';
@@ -218,10 +217,11 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* First Row of Podcast Cards */}
+        {/* Additional Articles - Using PodcastCard Component */}
         <section className="py-8 bg-white">
           <div className="content-container space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* AI-native startup card using PodcastCard */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
                 guestName="Dan Shipper"
@@ -233,6 +233,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/ai-startup'}
               />
 
+              {/* Essential reading card using PodcastCard */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
                 guestName="Essential Reading"
@@ -244,6 +245,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/essential-reading'}
               />
 
+              {/* Foundation Sprint card using PodcastCard */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face"
                 guestName="Jake Knapp & John Zeratsky"
@@ -262,6 +264,7 @@ const Homepage = () => {
         <section className="py-8 bg-white">
           <div className="content-container space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* Product management card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1494790108755-2616b332c446?w=80&h=80&fit=crop&crop=face"
                 guestName="Sarah Chen"
@@ -273,6 +276,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/product-market-fit'}
               />
 
+              {/* Growth strategy card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
                 guestName="Marcus Johnson"
@@ -284,6 +288,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/growth-engine'}
               />
 
+              {/* User research card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
                 guestName="Emma Rodriguez"
@@ -302,6 +307,7 @@ const Homepage = () => {
         <section className="py-8 bg-white">
           <div className="content-container space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* Fundraising card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
                 guestName="Alex Turner"
@@ -313,6 +319,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/fundraising-playbook'}
               />
 
+              {/* Team building card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face"
                 guestName="Rachel Kim"
@@ -324,6 +331,7 @@ const Homepage = () => {
                 onClick={() => window.location.href = '/articles/product-team-building'}
               />
 
+              {/* Product design card */}
               <PodcastCard
                 guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
                 guestName="David Park"
@@ -334,21 +342,6 @@ const Homepage = () => {
                 category="DESIGN"
                 onClick={() => window.location.href = '/articles/design-systems'}
               />
-            </div>
-          </div>
-        </section>
-
-        {/* All Articles Button Section */}
-        <section className="py-12 bg-white">
-          <div className="content-container">
-            <div className="flex justify-center">
-              <Link 
-                to="/articles"
-                className="inline-flex items-center gap-1 px-5 py-2.5 bg-[#F2F3F4] hover:bg-[#E0E1E2] active:bg-[#D5D6D7] text-[#1A1A1A] font-medium text-base rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F81F7] focus-visible:ring-offset-2"
-              >
-                All articles
-                <ChevronRight className="w-4 h-4" />
-              </Link>
             </div>
           </div>
         </section>
