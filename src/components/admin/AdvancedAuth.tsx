@@ -183,7 +183,7 @@ export const AdvancedAuth = () => {
                 <Input
                   id="password-length"
                   type="number"
-                  value={authConfig.password_min_length?.toString() ?? ''}
+                  value={authConfig.password_min_length?.toString() ?? '8'}
                   onChange={(e) => {
                     const value = parseInt(e.target.value);
                     if (!isNaN(value) && value > 0) {
@@ -260,7 +260,7 @@ export const AdvancedAuth = () => {
                 <Input
                   id="jwt-exp"
                   type="number"
-                  value={authConfig.jwt_exp?.toString() ?? ''}
+                  value={authConfig.jwt_exp?.toString() ?? '3600'}
                   onChange={(e) => {
                     const value = parseInt(e.target.value);
                     if (!isNaN(value) && value > 0) {

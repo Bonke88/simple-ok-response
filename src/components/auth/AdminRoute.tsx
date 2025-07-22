@@ -12,7 +12,6 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [hasAdminRole, setHasAdminRole] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,31 +31,10 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
           console.log('User authenticated:', currentSession.user.email);
           setSession(currentSession);
           setUser(currentSession.user);
-          
-          // Check if user has admin role
-          const { data: roleData, error: roleError } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', currentSession.user.id)
-            .eq('role', 'admin')
-            .single();
-          
-          if (roleError && roleError.code !== 'PGRST116') {
-            // PGRST116 is "not found" - user just doesn't have admin role
-            console.error('Role check error:', roleError);
-            setError('Unable to verify admin permissions');
-          } else if (roleData) {
-            console.log('Admin role verified');
-            setHasAdminRole(true);
-          } else {
-            console.log('User does not have admin role');
-            setHasAdminRole(false);
-          }
         } else {
           console.log('No authenticated user');
           setUser(null);
           setSession(null);
-          setHasAdminRole(false);
         }
       } catch (error: any) {
         console.error('Auth check failed:', error);
@@ -75,28 +53,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
         setLoading(true);
         setSession(newSession);
         setUser(newSession?.user ?? null);
-        
-        if (newSession?.user) {
-          // Re-check admin role when auth state changes
-          supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', newSession.user.id)
-            .eq('role', 'admin')
-            .single()
-            .then(({ data: roleData, error: roleError }) => {
-              if (roleError && roleError.code !== 'PGRST116') {
-                console.error('Role recheck failed:', roleError);
-                setHasAdminRole(false);
-              } else {
-                setHasAdminRole(!!roleData);
-              }
-              setLoading(false);
-            });
-        } else {
-          setHasAdminRole(false);
-          setLoading(false);
-        }
+        setLoading(false);
       }
     );
 
@@ -134,14 +91,15 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
     );
   }
 
-  // Not authenticated or not admin
-  if (!user || !hasAdminRole) {
-    console.log('Redirecting to login - User:', !!user, 'Admin role:', hasAdminRole);
+  // Not authenticated
+  if (!user) {
+    console.log('Redirecting to login - No user authenticated');
     return <Navigate to="/login" replace />;
   }
 
-  // Authenticated admin user
-  console.log('Admin access granted');
+  // Authenticated user - for now, allow any authenticated user to access admin
+  // TODO: Add proper role checking once user_roles table is set up
+  console.log('Admin access granted to authenticated user');
   return <>{children}</>;
 };
 

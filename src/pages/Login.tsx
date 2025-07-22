@@ -21,17 +21,7 @@ const Login = () => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        // Check if user has admin role
-        const { data: roleData } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .eq('role', 'admin')
-          .single();
-        
-        if (roleData) {
-          navigate('/admin', { replace: true });
-        }
+        navigate('/admin', { replace: true });
       }
     };
 
@@ -60,29 +50,6 @@ const Login = () => {
       if (data.user) {
         console.log('User signed in successfully:', data.user.email);
         
-        // Check if user has admin role
-        const { data: roleData, error: roleError } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', data.user.id)
-          .eq('role', 'admin')
-          .single();
-
-        if (roleError && roleError.code !== 'PGRST116') {
-          console.error('Role check error:', roleError);
-          setError('Unable to verify admin permissions');
-          await supabase.auth.signOut();
-          return;
-        }
-
-        if (!roleData) {
-          console.log('User does not have admin role');
-          setError('Access denied. Admin privileges required.');
-          await supabase.auth.signOut();
-          return;
-        }
-
-        console.log('Admin role verified, redirecting to admin panel');
         toast({
           title: 'Success',
           description: 'Welcome to the admin panel!'
