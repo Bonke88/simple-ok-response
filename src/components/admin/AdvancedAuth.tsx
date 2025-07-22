@@ -185,9 +185,14 @@ export const AdvancedAuth = () => {
                   type="number"
                   value={authConfig.password_min_length?.toString() ?? '8'}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value);
-                    if (!isNaN(value) && value > 0) {
-                      updateAuthConfig({ password_min_length: value });
+                    const inputValue = e.target.value.trim();
+                    if (inputValue === '') {
+                      updateAuthConfig({ password_min_length: 8 });
+                      return;
+                    }
+                    const parsedValue = parseInt(inputValue, 10);
+                    if (Number.isInteger(parsedValue) && parsedValue >= 6 && parsedValue <= 50) {
+                      updateAuthConfig({ password_min_length: parsedValue });
                     }
                   }}
                   min="6"
@@ -262,9 +267,14 @@ export const AdvancedAuth = () => {
                   type="number"
                   value={authConfig.jwt_exp?.toString() ?? '3600'}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value);
-                    if (!isNaN(value) && value > 0) {
-                      updateAuthConfig({ jwt_exp: value });
+                    const inputValue = e.target.value.trim();
+                    if (inputValue === '') {
+                      updateAuthConfig({ jwt_exp: 3600 });
+                      return;
+                    }
+                    const parsedValue = parseInt(inputValue, 10);
+                    if (Number.isInteger(parsedValue) && parsedValue > 0) {
+                      updateAuthConfig({ jwt_exp: parsedValue });
                     }
                   }}
                 />
