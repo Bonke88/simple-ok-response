@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -19,6 +20,11 @@ const ProjectScorer = lazy(() => import('@/pages/tools/ProjectScorer'));
 const CustomerFinder = lazy(() => import('@/pages/tools/CustomerFinder'));
 const LaunchDiagnostic = lazy(() => import('@/pages/tools/LaunchDiagnostic'));
 const AnonymousLaunch = lazy(() => import('@/pages/tools/AnonymousLaunch'));
+
+// Admin pages
+const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+const PillarManager = lazy(() => import('@/pages/admin/PillarManager'));
+const ArticleManager = lazy(() => import('@/pages/admin/ArticleManager'));
 
 const queryClient = new QueryClient();
 
@@ -44,6 +50,11 @@ function App() {
                     <Route path="/tools/customer-finder" element={<CustomerFinder />} />
                     <Route path="/tools/launch-diagnostic" element={<LaunchDiagnostic />} />
                     <Route path="/tools/anonymous-launch" element={<AnonymousLaunch />} />
+                    
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/pillars" element={<PillarManager />} />
+                    <Route path="/admin/articles" element={<ArticleManager />} />
                   </Routes>
                 </Suspense>
               </Layout>
