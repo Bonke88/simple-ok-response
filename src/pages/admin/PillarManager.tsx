@@ -16,12 +16,20 @@ interface ContentPillar {
   id: string;
   name: string;
   slug: string;
+  description: string | null;
+  content_percentage: number | null;
+  order_index: number;
+  color_theme: string | null;
+  icon_name: string | null;
+  is_active: boolean;
+}
+
+interface PillarFormData {
+  name: string;
   description: string;
   content_percentage: number;
-  order_index: number;
   color_theme: string;
   icon_name: string;
-  is_active: boolean;
 }
 
 const PillarManager = () => {
@@ -43,13 +51,17 @@ const PillarManager = () => {
   });
 
   const createPillarMutation = useMutation({
-    mutationFn: async (pillarData: Partial<ContentPillar>) => {
-      const slug = pillarData.name?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || '';
+    mutationFn: async (pillarData: PillarFormData) => {
+      const slug = pillarData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
       
       const { data, error } = await supabase
         .from('content_pillars')
         .insert({
-          ...pillarData,
+          name: pillarData.name,
+          description: pillarData.description,
+          content_percentage: pillarData.content_percentage,
+          color_theme: pillarData.color_theme,
+          icon_name: pillarData.icon_name,
           slug,
           order_index: (pillars?.length || 0) + 1,
         })
@@ -64,7 +76,7 @@ const PillarManager = () => {
       setIsAddingPillar(false);
       toast({ title: 'Success', description: 'Pillar created successfully!' });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({ 
         title: 'Error', 
         description: `Failed to create pillar: ${error.message}`,
@@ -77,7 +89,14 @@ const PillarManager = () => {
     mutationFn: async (pillarData: ContentPillar) => {
       const { data, error } = await supabase
         .from('content_pillars')
-        .update(pillarData)
+        .update({
+          name: pillarData.name,
+          description: pillarData.description,
+          content_percentage: pillarData.content_percentage,
+          color_theme: pillarData.color_theme,
+          icon_name: pillarData.icon_name,
+          is_active: pillarData.is_active
+        })
         .eq('id', pillarData.id)
         .select()
         .single();
@@ -90,7 +109,7 @@ const PillarManager = () => {
       setEditingPillar(null);
       toast({ title: 'Success', description: 'Pillar updated successfully!' });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({ 
         title: 'Error', 
         description: `Failed to update pillar: ${error.message}`,
@@ -112,7 +131,7 @@ const PillarManager = () => {
       queryClient.invalidateQueries({ queryKey: ['content-pillars'] });
       toast({ title: 'Success', description: 'Pillar deleted successfully!' });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({ 
         title: 'Error', 
         description: `Failed to delete pillar: ${error.message}`,
@@ -121,8 +140,8 @@ const PillarManager = () => {
     }
   });
 
-  const QuickAddForm = ({ onSubmit, onClose }: { onSubmit: (data: any) => void; onClose: () => void }) => {
-    const [formData, setFormData] = useState({
+  const QuickAddForm = ({ onSubmit, onClose }: { onSubmit: (data: PillarFormData) => void; onClose: () => void }) => {
+    const [formData, setFormData] = useState<PillarFormData>({
       name: '',
       description: '',
       content_percentage: 25,
@@ -237,7 +256,7 @@ const PillarManager = () => {
                     <GripVertical className="h-5 w-5 text-gray-400 cursor-move" />
                     <div
                       className="w-4 h-4 rounded"
-                      style={{ backgroundColor: pillar.color_theme }}
+                      style={{ backgroundColor: pillar.color_theme || '#3B82F6' }}
                     />
                     <div>
                       <CardTitle className="text-lg">{pillar.name}</CardTitle>
@@ -246,7 +265,7 @@ const PillarManager = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary">{pillar.content_percentage}%</Badge>
+                    <Badge variant="secondary">{pillar.content_percentage || 0}%</Badge>
                     <Badge variant={pillar.is_active ? 'default' : 'secondary'}>
                       {pillar.is_active ? 'Active' : 'Inactive'}
                     </Badge>

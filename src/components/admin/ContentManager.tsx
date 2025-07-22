@@ -6,18 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface Article {
   id: string;
   title: string;
   slug: string;
   status: string;
-  published_at: string;
+  published_at: string | null;
   created_at: string;
   content_pillars?: {
     name: string;
     color_theme: string;
-  };
+  } | null;
 }
 
 interface Tool {
@@ -30,7 +31,7 @@ interface Tool {
   content_pillars?: {
     name: string;
     color_theme: string;
-  };
+  } | null;
 }
 
 export const ContentManager = () => {
@@ -46,9 +47,9 @@ export const ContentManager = () => {
     try {
       setLoading(true);
       
-      // Fetch articles
+      // Fetch articles with proper table reference
       const { data: articlesData, error: articlesError } = await supabase
-        .from('articles' as any)
+        .from('articles')
         .select(`
           id,
           title,
@@ -63,12 +64,20 @@ export const ContentManager = () => {
         `)
         .order('created_at', { ascending: false });
 
-      if (articlesError) throw articlesError;
-      setArticles(articlesData || []);
+      if (articlesError) {
+        console.error('Error fetching articles:', articlesError);
+        toast({
+          title: 'Error',
+          description: 'Failed to fetch articles',
+          variant: 'destructive'
+        });
+      } else {
+        setArticles(articlesData || []);
+      }
 
-      // Fetch tools
+      // Fetch tools with proper table reference
       const { data: toolsData, error: toolsError } = await supabase
-        .from('tools' as any)
+        .from('tools')
         .select(`
           id,
           name,
@@ -83,10 +92,23 @@ export const ContentManager = () => {
         `)
         .order('created_at', { ascending: false });
 
-      if (toolsError) throw toolsError;
-      setTools(toolsData || []);
+      if (toolsError) {
+        console.error('Error fetching tools:', toolsError);
+        toast({
+          title: 'Error',
+          description: 'Failed to fetch tools',
+          variant: 'destructive'
+        });
+      } else {
+        setTools(toolsData || []);
+      }
     } catch (error) {
       console.error('Error fetching content:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch content',
+        variant: 'destructive'
+      });
     } finally {
       setLoading(false);
     }

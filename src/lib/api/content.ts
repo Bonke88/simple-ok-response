@@ -15,7 +15,7 @@ export interface ContentFilters {
 export class ContentAPI {
   static async getArticles(filters: ContentFilters = {}) {
     let query = supabase
-      .from('articles' as any)
+      .from('articles')
       .select(`
         *,
         content_pillars (
@@ -25,14 +25,14 @@ export class ContentAPI {
           color_theme
         ),
         article_tags (
-          tag:tags (
+          tags (
             id,
             name,
             slug
           )
         ),
         article_authors (
-          author:authors (
+          authors (
             id,
             name,
             avatar_url
@@ -58,9 +58,8 @@ export class ContentAPI {
     // Pagination
     const limit = filters.limit || 10;
     const offset = filters.offset || 0;
-    query = query.range(offset, offset + limit - 1);
-
-    const { data, error, count } = await query;
+    
+    const { data, error, count } = await query.range(offset, offset + limit - 1);
     
     if (error) throw error;
 
@@ -77,7 +76,7 @@ export class ContentAPI {
 
   static async getArticleBySlug(pillarSlug: string, articleSlug: string) {
     const { data, error } = await supabase
-      .from('articles' as any)
+      .from('articles')
       .select(`
         *,
         content_pillars (
@@ -87,14 +86,14 @@ export class ContentAPI {
           color_theme
         ),
         article_tags (
-          tag:tags (
+          tags (
             id,
             name,
             slug
           )
         ),
         article_authors (
-          author:authors (
+          authors (
             id,
             name,
             bio,
@@ -103,7 +102,6 @@ export class ContentAPI {
         )
       `)
       .eq('slug', articleSlug)
-      .eq('content_pillars.slug', pillarSlug)
       .eq('status', 'published')
       .single();
 
@@ -113,7 +111,7 @@ export class ContentAPI {
 
   static async getPillars() {
     const { data, error } = await supabase
-      .from('content_pillars' as any)
+      .from('content_pillars')
       .select('*')
       .eq('is_active', true)
       .order('order_index');
@@ -124,7 +122,7 @@ export class ContentAPI {
 
   static async getTools(filters: ContentFilters = {}) {
     let query = supabase
-      .from('tools' as any)
+      .from('tools')
       .select(`
         *,
         content_pillars (
@@ -134,7 +132,7 @@ export class ContentAPI {
           color_theme
         ),
         tool_tags (
-          tag:tags (
+          tags (
             id,
             name,
             slug
@@ -155,7 +153,7 @@ export class ContentAPI {
 
   static async getToolBySlug(slug: string) {
     const { data, error } = await supabase
-      .from('tools' as any)
+      .from('tools')
       .select(`
         *,
         content_pillars (
@@ -183,7 +181,7 @@ export class ContentAPI {
     }
 
     const { error } = await supabase
-      .from('analytics_events' as any)
+      .from('analytics_events')
       .insert({
         event_type: eventType,
         content_type: contentType,
@@ -199,7 +197,7 @@ export class ContentAPI {
 
   static async getRelatedContent(articleId: string, limit = 3) {
     const { data, error } = await supabase
-      .from('content_relationships' as any)
+      .from('content_relationships')
       .select(`
         target_id,
         target_type,
@@ -217,7 +215,7 @@ export class ContentAPI {
 
   static async searchContent(query: string, limit = 10) {
     const { data, error } = await supabase
-      .from('articles' as any)
+      .from('articles')
       .select(`
         id,
         title,
