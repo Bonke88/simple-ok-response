@@ -15,7 +15,7 @@ export interface ContentFilters {
 export class ContentAPI {
   static async getArticles(filters: ContentFilters = {}) {
     let query = supabase
-      .from('articles')
+      .from('articles' as any)
       .select(`
         *,
         content_pillars (
@@ -77,7 +77,7 @@ export class ContentAPI {
 
   static async getArticleBySlug(pillarSlug: string, articleSlug: string) {
     const { data, error } = await supabase
-      .from('articles')
+      .from('articles' as any)
       .select(`
         *,
         content_pillars (
@@ -113,7 +113,7 @@ export class ContentAPI {
 
   static async getPillars() {
     const { data, error } = await supabase
-      .from('content_pillars')
+      .from('content_pillars' as any)
       .select('*')
       .eq('is_active', true)
       .order('order_index');
@@ -124,7 +124,7 @@ export class ContentAPI {
 
   static async getTools(filters: ContentFilters = {}) {
     let query = supabase
-      .from('tools')
+      .from('tools' as any)
       .select(`
         *,
         content_pillars (
@@ -155,7 +155,7 @@ export class ContentAPI {
 
   static async getToolBySlug(slug: string) {
     const { data, error } = await supabase
-      .from('tools')
+      .from('tools' as any)
       .select(`
         *,
         content_pillars (
@@ -183,7 +183,7 @@ export class ContentAPI {
     }
 
     const { error } = await supabase
-      .from('analytics_events')
+      .from('analytics_events' as any)
       .insert({
         event_type: eventType,
         content_type: contentType,
@@ -199,7 +199,7 @@ export class ContentAPI {
 
   static async getRelatedContent(articleId: string, limit = 3) {
     const { data, error } = await supabase
-      .from('content_relationships')
+      .from('content_relationships' as any)
       .select(`
         target_id,
         target_type,
@@ -217,7 +217,7 @@ export class ContentAPI {
 
   static async searchContent(query: string, limit = 10) {
     const { data, error } = await supabase
-      .from('articles')
+      .from('articles' as any)
       .select(`
         id,
         title,

@@ -1,4 +1,3 @@
-
 export interface Article {
   slug: string;
   title: string;
@@ -265,7 +264,6 @@ If you can't validate demand in 2 weeks, you'll never build a profitable product
 
 The validation test saves you from the most expensive mistake in side projects: building something nobody wants.`
   },
-  // Ship It Category  
   {
     slug: 'anonymous-saas-launch-without-boss-knowing',
     title: 'Anonymous SaaS: How to Launch Without Your Boss Knowing',
@@ -319,8 +317,8 @@ The product must be genuinely unrelated to:
 ### Phase 1: Legal Protection
 
 **Step 1: Review Your Contract**
-- Get a lawyer to review your employment agreement
-- Understand your state's employee invention laws
+- Get a lawyer to review your employment agreement  
+- Research your state's employee invention laws
 - Document what's protected vs. what's restricted
 
 **Step 2: Choose Your Business Structure**
