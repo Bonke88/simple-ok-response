@@ -8,13 +8,16 @@ Allow: /
 # Disallow admin pages
 Disallow: /admin/
 Disallow: /private/
+Disallow: /_/
 
 # Allow specific search engines
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -22,11 +25,27 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
 # Sitemap
 Sitemap: ${baseUrl}/sitemap.xml
 
-# Crawl delay
-Crawl-delay: 1`;
+# Host
+Host: ${baseUrl}`;
 };
 
 export const downloadRobotsTxt = () => {

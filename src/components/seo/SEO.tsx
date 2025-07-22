@@ -17,6 +17,7 @@ interface SEOProps {
     tags?: string[];
   };
   noIndex?: boolean;
+  structuredData?: any;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -27,7 +28,8 @@ const SEO: React.FC<SEOProps> = ({
   url,
   type = 'website',
   article,
-  noIndex = false
+  noIndex = false,
+  structuredData
 }) => {
   const siteName = 'GTM Night Shift';
   const defaultTitle = 'GTM Night Shift - Go-to-Market Advice for Corporate Engineers';
@@ -39,35 +41,87 @@ const SEO: React.FC<SEOProps> = ({
   const fullImage = image || defaultImage;
   const fullUrl = url ? `${window.location.origin}${url}` : window.location.href;
   
-  const jsonLd = {
+  // Enhanced JSON-LD structured data
+  const defaultJsonLd = {
     '@context': 'https://schema.org',
     '@type': type === 'article' ? 'Article' : 'WebSite',
     name: fullTitle,
     description: fullDescription,
     url: fullUrl,
-    image: fullImage,
+    image: {
+      '@type': 'ImageObject',
+      url: fullImage,
+      width: 1200,
+      height: 630
+    },
     ...(type === 'article' && article && {
+      '@type': 'Article',
+      headline: title,
+      description: fullDescription,
+      image: fullImage,
       author: {
         '@type': 'Person',
-        name: article.author || 'GTM Night Shift'
+        name: article.author || 'GTM Night Shift Team',
+        url: `${window.location.origin}/about`
       },
-      datePublished: article.publishedTime,
-      dateModified: article.modifiedTime,
-      articleSection: article.section,
-      keywords: article.tags?.join(', ')
-    }),
-    ...(type === 'website' && {
-      '@type': 'WebSite',
       publisher: {
         '@type': 'Organization',
         name: siteName,
         logo: {
           '@type': 'ImageObject',
-          url: fullImage
-        }
+          url: fullImage,
+          width: 200,
+          height: 60
+        },
+        url: window.location.origin
+      },
+      datePublished: article.publishedTime,
+      dateModified: article.modifiedTime || article.publishedTime,
+      articleSection: article.section,
+      keywords: article.tags?.join(', '),
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': fullUrl
+      },
+      isPartOf: {
+        '@type': 'Blog',
+        name: `${siteName} Blog`,
+        url: `${window.location.origin}/articles`
+      }
+    }),
+    ...(type === 'website' && {
+      '@type': 'WebSite',
+      name: siteName,
+      url: window.location.origin,
+      description: fullDescription,
+      publisher: {
+        '@type': 'Organization',
+        name: siteName,
+        logo: {
+          '@type': 'ImageObject',
+          url: fullImage,
+          width: 200,
+          height: 60
+        },
+        url: window.location.origin,
+        sameAs: [
+          'https://twitter.com/gtmnightshift',
+          'https://linkedin.com/company/gtmnightshift'
+        ]
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${window.location.origin}/search?q={search_term_string}`
+        },
+        'query-input': 'required name=search_term_string'
       }
     })
   };
+
+  // Use custom structured data if provided, otherwise use default
+  const jsonLd = structuredData || defaultJsonLd;
 
   return (
     <Helmet>
@@ -84,8 +138,11 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={fullDescription} />
       <meta property="og:image" content={fullImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_US" />
       
       {/* Article specific OG tags */}
       {type === 'article' && article && (
@@ -103,16 +160,22 @@ const SEO: React.FC<SEOProps> = ({
       {/* Twitter Cards */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@gtmnightshift" />
+      <meta name="twitter:creator" content="@gtmnightshift" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={fullImage} />
+      
+      {/* Additional SEO Tags */}
+      <meta name="author" content={article?.author || 'GTM Night Shift Team'} />
+      <meta name="language" content="English" />
+      <meta name="revisit-after" content="7 days" />
       
       {/* Canonical URL */}
       <link rel="canonical" href={fullUrl} />
       
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json">
-        {JSON.stringify(jsonLd)}
+        {JSON.stringify(jsonLd, null, 2)}
       </script>
     </Helmet>
   );
