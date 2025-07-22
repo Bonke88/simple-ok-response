@@ -1,64 +1,81 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Clock, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getArticlesByCategory, getAllTags, filterArticles } from '@/lib/content';
+import { ContentAPI } from '@/lib/api/content';
 import { useAnalytics } from '@/components/analytics/AnalyticsProvider';
 import SearchBar from '@/components/search/SearchBar';
-import ArticleFilters, { FilterOptions } from '@/components/search/ArticleFilters';
-import SearchResults from '@/components/search/SearchResults';
 
 const ArticleCategory = () => {
   const { category } = useParams<{ category: string }>();
   const { trackPageView } = useAnalytics();
+  const [articles, setArticles] = useState<any[]>([]);
+  const [pillar, setPillar] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [filters, setFilters] = useState<FilterOptions>({});
   const [isSearching, setIsSearching] = useState(false);
-  
-  const categoryData: Record<string, { title: string; description: string; icon: React.ReactNode }> = {
-    'picking-winners': {
-      title: 'Picking Winners',
-      description: 'Learn to validate ideas before you code. Most side projects fail because engineers build cool tech that nobody wants to pay for.',
-      icon: <TrendingUp className="h-8 w-8" />
-    },
-    'ship-it': {
-      title: 'Ship It',
-      description: 'Break the 80% trap. You\'ll never feel ready to launch, but shipping imperfect products beats perfect products that never ship.',
-      icon: <TrendingUp className="h-8 w-8" />
-    },
-    'first-customers': {
-      title: 'First Customers',
-      description: 'Find and convert your first paying customers. From zero to $1K MRR requires different tactics than scaling to $10K.',
-      icon: <TrendingUp className="h-8 w-8" />
-    },
-    'scale': {
-      title: 'Scale',
-      description: 'Grow your side project while keeping your day job and sanity. Energy management and smart automation are everything.',
-      icon: <TrendingUp className="h-8 w-8" />
-    }
-  };
-
-  const currentCategory = categoryData[category as string];
-  const allArticles = getArticlesByCategory(category as string);
-  const filteredArticles = filterArticles(allArticles, filters);
-  const availableTags = getAllTags();
 
   useEffect(() => {
-    if (currentCategory) {
-      trackPageView(`/articles/${category}`, {
-        category: currentCategory.title,
-        article_count: allArticles.length
-      });
-    }
-  }, [category, currentCategory, allArticles.length, trackPageView]);
+    const loadContent = async () => {
+      if (!category) return;
+      
+      try {
+        // Get all pillars to find the current one
+        const pillars = await ContentAPI.getPillars();
+        const currentPillar = pillars?.find(p => p.slug === category);
+        
+        if (currentPillar) {
+          setPillar(currentPillar);
+          
+          // Get articles for this pillar
+          const articlesResponse = await ContentAPI.getArticles({
+            pillar: currentPillar.id,
+            limit: 50
+          });
+          
+          setArticles(articlesResponse.data || []);
+          
+          trackPageView(`/articles/${category}`, {
+            category: currentPillar.name,
+            article_count: articlesResponse.data?.length || 0
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load category content:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadContent();
+  }, [category, trackPageView]);
 
   const handleSearchResults = (results: any[]) => {
     setSearchResults(results);
     setIsSearching(results.length > 0);
   };
 
-  if (!currentCategory) {
+  if (isLoading) {
+    return (
+      <div className="py-16">
+        <div className="content-container">
+          <div className="animate-pulse space-y-8">
+            <div className="h-8 bg-muted rounded w-1/4"></div>
+            <div className="h-12 bg-muted rounded w-1/2 mx-auto"></div>
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-24 bg-muted rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!pillar) {
     return (
       <div className="py-16">
         <div className="content-container text-center">
@@ -82,7 +99,7 @@ const ArticleCategory = () => {
     }
   };
 
-  const articlesToShow = isSearching ? searchResults : filteredArticles;
+  const articlesToShow = isSearching ? searchResults : articles;
 
   return (
     <div className="py-16">
@@ -100,94 +117,86 @@ const ArticleCategory = () => {
           <div className="text-center mb-16">
             <div className="flex justify-center mb-6">
               <div className="p-4 bg-accent/10 rounded-lg">
-                {currentCategory.icon}
+                <TrendingUp className="h-8 w-8" />
               </div>
             </div>
-            <h1 className="mb-6">{currentCategory.title}</h1>
+            <h1 className="mb-6">{pillar.name}</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {currentCategory.description}
+              {pillar.description}
             </p>
           </div>
 
-          {/* Search and Filters */}
-          <div className="mb-8 space-y-6">
+          {/* Search */}
+          <div className="mb-8">
             <SearchBar
               onResults={handleSearchResults}
-              placeholder={`Search ${currentCategory.title.toLowerCase()} articles...`}
+              placeholder={`Search ${pillar.name.toLowerCase()} articles...`}
             />
-            
-            {!isSearching && (
-              <ArticleFilters
-                filters={filters}
-                onFiltersChange={setFilters}
-                availableTags={availableTags}
-              />
-            )}
           </div>
 
-          {isSearching ? (
-            <SearchResults
-              results={searchResults}
-              query="" // We'll need to pass the actual query
-            />
+          {articlesToShow.length > 0 ? (
+            <div className="space-y-6">
+              {articlesToShow.map((article) => (
+                <Link key={article.id} to={`/articles/${category}/${article.slug}`}>
+                  <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2 hover:text-accent transition-colors">
+                            {article.title}
+                          </CardTitle>
+                          <p className="text-muted-foreground mb-4">
+                            {article.subtitle || article.meta_description}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                            <Clock className="h-4 w-4" />
+                            <span>{article.reading_time} min</span>
+                          </div>
+                          {article.difficulty_level && (
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(article.difficulty_level)}`}>
+                              {article.difficulty_level}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {article.article_tags?.slice(0, 2).map((tagRelation: any) => (
+                            <span key={tagRelation.tags.id} className="px-2 py-1 bg-muted rounded text-xs">
+                              {tagRelation.tags.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           ) : (
-            <>
-              {articlesToShow.length > 0 ? (
-                <div className="space-y-6">
-                  {articlesToShow.map((article) => (
-                    <Link key={article.slug} to={`/articles/${category}/${article.slug}`}>
-                      <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                        <CardHeader>
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <CardTitle className="text-xl mb-2 hover:text-accent transition-colors">
-                                {article.title}
-                              </CardTitle>
-                              <p className="text-muted-foreground mb-4">
-                                {article.description}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                              <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-                                <Clock className="h-4 w-4" />
-                                <span>{article.readTime}</span>
-                              </div>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(article.difficulty)}`}>
-                                {article.difficulty}
-                              </span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              {article.tags.slice(0, 2).map((tag: string) => (
-                                <span key={tag} className="px-2 py-1 bg-muted rounded text-xs">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </CardHeader>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-16">
-                  <h2 className="text-2xl font-bold mb-4">No articles match your filters</h2>
-                  <p className="text-muted-foreground mb-8">
-                    Try adjusting your filters or search terms to find more content.
-                  </p>
-                  <Button onClick={() => setFilters({})}>
-                    Clear Filters
-                  </Button>
-                </div>
+            <div className="text-center py-16">
+              <h2 className="text-2xl font-bold mb-4">
+                {isSearching ? 'No articles match your search' : 'No articles available'}
+              </h2>
+              <p className="text-muted-foreground mb-8">
+                {isSearching 
+                  ? 'Try adjusting your search terms to find more content.'
+                  : 'Articles for this category will be added soon.'
+                }
+              </p>
+              {isSearching && (
+                <Button onClick={() => {setSearchResults([]); setIsSearching(false);}}>
+                  Clear Search
+                </Button>
               )}
-            </>
+            </div>
           )}
 
           {/* Related Tools Section */}
           <div className="border-t pt-16 mt-16">
-            <h2 className="text-2xl font-bold mb-8 text-center">Helpful Tools for {currentCategory.title}</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">Helpful Tools for {pillar.name}</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {category === 'picking-winners' && (
                 <>

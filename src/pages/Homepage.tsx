@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,50 +19,65 @@ import {
 } from 'lucide-react';
 import SEO from '@/components/seo/SEO';
 import PodcastCard from '@/components/cards/PodcastCard';
+import { ContentAPI } from '@/lib/api/content';
 
 const Homepage = () => {
-  const mostPopularArticles = [
-    {
-      title: "State of the product job market in 2025",
-      readTime: "15 min",
-      author: "LENNY RACHITSKY",
-      publishedDate: "MAY 13",
-      link: "/articles/fatal-flaw",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=240&fit=crop&crop=face",
-      category: "CAREER",
-      excerpt: "Deep dive into the evolving landscape of product management roles and what it means for your career trajectory."
-    },
-    {
-      title: "A guide to AI prototyping for product managers",
-      readTime: "12 min",
-      author: "COLIN MATTHEWS",
-      publishedDate: "JAN 7",
-      link: "/articles/anonymous-saas",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=240&fit=crop&crop=face",
-      category: "AI & TECH",
-      excerpt: "Learn how to leverage AI tools for rapid prototyping and validation in your product development process."
-    },
-    {
-      title: "How Duolingo reignited user growth",
-      readTime: "8 min",
-      author: "JORGE MAZAL",
-      publishedDate: "FEB 28, 2023",
-      link: "/articles/validation-framework",
-      image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=400&h=240&fit=crop&crop=face",
-      category: "GROWTH",
-      excerpt: "Behind-the-scenes look at the strategies that helped Duolingo achieve massive user engagement."
-    },
-    {
-      title: "Product manager is an unfair role. So work unfairly.",
-      readTime: "10 min",
-      author: "TAL RAVIV",
-      publishedDate: "NOV 12, 2024",
-      link: "/articles/energy-management",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=240&fit=crop&crop=face",
-      category: "STRATEGY",
-      excerpt: "Why traditional approaches to product management fail and how to gain unfair advantages."
-    }
-  ];
+  const [featuredArticles, setFeaturedArticles] = useState<any[]>([]);
+  const [pillars, setPillars] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const [articlesResponse, pillarsData] = await Promise.all([
+          ContentAPI.getArticles({ limit: 8 }),
+          ContentAPI.getPillars()
+        ]);
+        
+        setFeaturedArticles(articlesResponse.data || []);
+        setPillars(pillarsData || []);
+      } catch (error) {
+        console.error('Failed to load homepage content:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="py-16">
+        <div className="content-container text-center">
+          <div className="animate-pulse space-y-8">
+            <div className="h-8 bg-muted rounded w-1/2 mx-auto"></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-64 bg-muted rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const getFeaturedArticle = () => {
+    return featuredArticles.find(article => article.featured) || featuredArticles[0];
+  };
+
+  const getPopularArticles = () => {
+    return featuredArticles.slice(0, 4);
+  };
+
+  const getAdditionalArticles = () => {
+    return featuredArticles.slice(4, 8);
+  };
+
+  const featuredArticle = getFeaturedArticle();
+  const popularArticles = getPopularArticles();
+  const additionalArticles = getAdditionalArticles();
 
   return (
     <>
@@ -76,126 +91,141 @@ const Homepage = () => {
       
       <div className="space-y-0">
         {/* Hero Feature Article */}
-        <section className="py-8 bg-gradient-to-br from-orange-50 to-red-50">
-          <div className="content-container">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              {/* Left - Enhanced Visual */}
-              <div className="order-2 md:order-1">
-                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 p-8 text-center min-h-[320px] flex flex-col justify-center shadow-2xl">
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 bg-black/5"></div>
-                  
-                  <div className="relative bg-white rounded-2xl p-6 max-w-sm mx-auto shadow-xl border border-orange-100">
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="relative">
-                        <img 
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
-                          alt="Jon Matthews" 
-                          className="w-20 h-20 rounded-full object-cover border-3 border-orange-200 shadow-lg"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+        {featuredArticle && (
+          <section className="py-8 bg-gradient-to-br from-orange-50 to-red-50">
+            <div className="content-container">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Left - Enhanced Visual */}
+                <div className="order-2 md:order-1">
+                  <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 p-8 text-center min-h-[320px] flex flex-col justify-center shadow-2xl">
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 bg-black/5"></div>
+                    
+                    <div className="relative bg-white rounded-2xl p-6 max-w-sm mx-auto shadow-xl border border-orange-100">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="relative">
+                          <img 
+                            src={featuredArticle.article_authors?.[0]?.authors?.avatar_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"} 
+                            alt={featuredArticle.article_authors?.[0]?.authors?.name || "GTM Night Shift"} 
+                            className="w-20 h-20 rounded-full object-cover border-3 border-orange-200 shadow-lg"
+                          />
+                          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                        </div>
                       </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">GTM Night Shift</h3>
+                      <p className="text-sm text-gray-600 mb-4">With {featuredArticle.article_authors?.[0]?.authors?.name || "Jon Matthews"}</p>
+                      <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-1.5 rounded-full text-sm font-bold border-0">
+                        {featuredArticle.content_pillars?.name || "Corporate Engineers"}
+                      </Badge>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">GTM Night Shift</h3>
-                    <p className="text-sm text-gray-600 mb-4">With Jon Matthews</p>
-                    <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-1.5 rounded-full text-sm font-bold border-0">
-                      Corporate Engineers
-                    </Badge>
                   </div>
                 </div>
+                
+                {/* Right - Enhanced Content */}
+                <div className="order-1 md:order-2">
+                  <div className="space-y-4">
+                    <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50">
+                      <TrendingUp className="w-3 h-3 mr-1" />
+                      FEATURED
+                    </Badge>
+                    
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                      {featuredArticle.title}
+                    </h1>
+                    
+                    <p className="text-lg text-gray-600 leading-relaxed">
+                      {featuredArticle.subtitle || featuredArticle.meta_description}
+                    </p>
+                    
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{featuredArticle.reading_time} min read</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <User className="w-4 h-4" />
+                        <span>{featuredArticle.article_authors?.[0]?.authors?.name || "GTM Team"}</span>
+                      </div>
+                      <span className="font-semibold text-gray-700">
+                        {new Date(featuredArticle.published_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                    
+                    <Link 
+                      to={`/articles/${featuredArticle.content_pillars?.slug}/${featuredArticle.slug}`}
+                      className="inline-block mt-4 bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors"
+                    >
+                      Read Article →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Most Popular Section */}
+        {popularArticles.length > 0 && (
+          <section className="py-12 bg-white">
+            <div className="content-container">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-bold text-gray-900">Most Popular</h2>
+                <Link 
+                  to="/start" 
+                  className="text-gray-600 hover:text-orange-600 font-semibold text-sm transition-colors duration-200 flex items-center gap-1"
+                >
+                  VIEW ALL
+                  <TrendingUp className="w-4 h-4" />
+                </Link>
               </div>
               
-              {/* Right - Enhanced Content */}
-              <div className="order-1 md:order-2">
-                <div className="space-y-4">
-                  <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50">
-                    <TrendingUp className="w-3 h-3 mr-1" />
-                    FEATURED
-                  </Badge>
-                  
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                    Corporate engineer quits OpenAI, GTM predictions, $100M talent wars, 20% unemployment, and the...
-                  </h1>
-                  
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    Ben Mann on why scaling laws are accelerating, how 20% unemployment is coming, why AI safety creates better products, and what he's teaching his kids about the future of work in an AI-driven world.
-                  </p>
-                  
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      <span>15 min read</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <User className="w-4 h-4" />
-                      <span>Jon Matthews</span>
-                    </div>
-                    <span className="font-semibold text-gray-700">9 HRS AGO</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {popularArticles.map((article) => (
+                  <div key={article.id} className="group">
+                    <Link to={`/articles/${article.content_pillars?.slug}/${article.slug}`} className="block">
+                      <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden">
+                        {/* Article Image */}
+                        <div className="relative">
+                          <img 
+                            src={article.article_authors?.[0]?.authors?.avatar_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=240&fit=crop&crop=face"} 
+                            alt={article.title}
+                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                          <Badge className="absolute top-3 left-3 bg-white/90 text-gray-800 hover:bg-white border-0 text-xs font-bold">
+                            {article.content_pillars?.name || "GTM"}
+                          </Badge>
+                        </div>
+                        
+                        <CardContent className="p-5">
+                          <div className="space-y-3">
+                            <h3 className="font-bold text-base text-gray-900 group-hover:text-orange-600 transition-colors leading-tight line-clamp-2 min-h-[48px]">
+                              {article.title}
+                            </h3>
+                            
+                            <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                              {article.subtitle || article.meta_description}
+                            </p>
+                            
+                            <div className="flex items-center justify-between pt-2">
+                              <div className="flex items-center gap-2 text-xs text-gray-500">
+                                <Clock className="w-3 h-3" />
+                                <span>{article.reading_time} min</span>
+                              </div>
+                              <span className="text-xs font-bold text-gray-700">
+                                {new Date(article.published_at).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Most Popular Section - Enhanced Cards */}
-        <section className="py-12 bg-white">
-          <div className="content-container">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Most Popular</h2>
-              <Link 
-                to="/articles" 
-                className="text-gray-600 hover:text-orange-600 font-semibold text-sm transition-colors duration-200 flex items-center gap-1"
-              >
-                VIEW ALL
-                <TrendingUp className="w-4 h-4" />
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {mostPopularArticles.map((article, index) => (
-                <div key={index} className="group">
-                  <Link to={article.link} className="block">
-                    <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-md overflow-hidden">
-                      {/* Enhanced Image with Overlay */}
-                      <div className="relative">
-                        <img 
-                          src={article.image} 
-                          alt={article.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <Badge className="absolute top-3 left-3 bg-white/90 text-gray-800 hover:bg-white border-0 text-xs font-bold">
-                          {article.category}
-                        </Badge>
-                      </div>
-                      
-                      <CardContent className="p-5">
-                        <div className="space-y-3">
-                          <h3 className="font-bold text-base text-gray-900 group-hover:text-orange-600 transition-colors leading-tight line-clamp-2 min-h-[48px]">
-                            {article.title}
-                          </h3>
-                          
-                          <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                            {article.excerpt}
-                          </p>
-                          
-                          <div className="flex items-center justify-between pt-2">
-                            <div className="flex items-center gap-2 text-xs text-gray-500">
-                              <Clock className="w-3 h-3" />
-                              <span>{article.readTime}</span>
-                            </div>
-                            <span className="text-xs font-bold text-gray-700">{article.publishedDate}</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Enhanced Divider */}
         <section className="py-8">
@@ -217,134 +247,52 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* Additional Articles - Using PodcastCard Component */}
-        <section className="py-8 bg-white">
-          <div className="content-container space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
-              {/* AI-native startup card using PodcastCard */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
-                guestName="Dan Shipper"
-                episodeTitle="The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code"
-                episodeBlurb="Inside a 15-person company where AI agents do most of the work, how they're building multiple products simultaneously, and what this means for the future of software development."
-                episodeDate="JUL 17"
-                authorName="LENNY RACHITSKY"
-                category="AI & TECH"
-                onClick={() => window.location.href = '/articles/ai-startup'}
-              />
+        {/* Additional Articles using PodcastCard Component */}
+        {additionalArticles.length > 0 && (
+          <>
+            <section className="py-8 bg-white">
+              <div className="content-container space-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+                  {additionalArticles.slice(0, 3).map((article) => (
+                    <PodcastCard
+                      key={article.id}
+                      guestPhoto={article.article_authors?.[0]?.authors?.avatar_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"}
+                      guestName={article.article_authors?.[0]?.authors?.name || "GTM Expert"}
+                      episodeTitle={article.title}
+                      episodeBlurb={article.subtitle || article.meta_description || ""}
+                      episodeDate={new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      authorName={article.article_authors?.[0]?.authors?.name?.toUpperCase() || "GTM TEAM"}
+                      category={article.content_pillars?.name?.toUpperCase() || "GTM"}
+                      onClick={() => window.location.href = `/articles/${article.content_pillars?.slug}/${article.slug}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
 
-              {/* Essential reading card using PodcastCard */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
-                guestName="Essential Reading"
-                episodeTitle="Essential reading for product builders—part 1"
-                episodeBlurb="7 timeless essays you likely haven't read but definitely should. These foundational pieces will change how you think about building products."
-                episodeDate="JUL 15"
-                authorName="LENNY RACHITSKY"
-                category="READING"
-                onClick={() => window.location.href = '/articles/essential-reading'}
-              />
-
-              {/* Foundation Sprint card using PodcastCard */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face"
-                guestName="Jake Knapp & John Zeratsky"
-                episodeTitle="Rapidly test and validate any startup idea with the 2-day Foundation Sprint"
-                episodeBlurb="Inside the Foundation Sprint—a recipe to validate any startup idea in 48 hours, before you build anything."
-                episodeDate="JUL 13"
-                authorName="LENNY RACHITSKY"
-                category="VALIDATION"
-                onClick={() => window.location.href = '/articles/foundation-sprint'}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Second Row of Podcast Cards */}
-        <section className="py-8 bg-white">
-          <div className="content-container space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
-              {/* Product management card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1494790108755-2616b332c446?w=80&h=80&fit=crop&crop=face"
-                guestName="Sarah Chen"
-                episodeTitle="Product-market fit isn't binary: How to think about it as a spectrum"
-                episodeBlurb="Why PMF is a continuous journey rather than a destination, and practical frameworks for measuring your progress along the spectrum."
-                episodeDate="JUL 10"
-                authorName="LENNY RACHITSKY"
-                category="STRATEGY"
-                onClick={() => window.location.href = '/articles/product-market-fit'}
-              />
-
-              {/* Growth strategy card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
-                guestName="Marcus Johnson"
-                episodeTitle="How to build a growth engine that compounds over time"
-                episodeBlurb="Inside the playbook for creating sustainable growth loops that generate exponential returns rather than linear growth."
-                episodeDate="JUL 8"
-                authorName="LENNY RACHITSKY"
-                category="GROWTH"
-                onClick={() => window.location.href = '/articles/growth-engine'}
-              />
-
-              {/* User research card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
-                guestName="Emma Rodriguez"
-                episodeTitle="Stop asking users what they want: The art of behavioral research"
-                episodeBlurb="Why traditional user surveys fail and how to uncover real user needs through behavioral research and observational studies."
-                episodeDate="JUL 5"
-                authorName="LENNY RACHITSKY"
-                category="RESEARCH"
-                onClick={() => window.location.href = '/articles/behavioral-research'}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Third Row of Podcast Cards */}
-        <section className="py-8 bg-white">
-          <div className="content-container space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
-              {/* Fundraising card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
-                guestName="Alex Turner"
-                episodeTitle="The fundraising playbook: How to raise your Series A in 2024"
-                episodeBlurb="Inside the complete strategy for raising venture capital, from deck creation to investor meetings and term sheet negotiations."
-                episodeDate="JUL 2"
-                authorName="LENNY RACHITSKY"
-                category="FUNDRAISING"
-                onClick={() => window.location.href = '/articles/fundraising-playbook'}
-              />
-
-              {/* Team building card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face"
-                guestName="Rachel Kim"
-                episodeTitle="How to build a high-performing product team from scratch"
-                episodeBlurb="The complete guide to hiring, structuring, and scaling product teams that ship great products consistently."
-                episodeDate="JUN 30"
-                authorName="LENNY RACHITSKY"
-                category="TEAM"
-                onClick={() => window.location.href = '/articles/product-team-building'}
-              />
-
-              {/* Product design card */}
-              <PodcastCard
-                guestPhoto="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
-                guestName="David Park"
-                episodeTitle="Design systems that scale: Building consistency across products"
-                episodeBlurb="How to create and maintain design systems that enable teams to move fast while maintaining quality and consistency."
-                episodeDate="JUN 28"
-                authorName="LENNY RACHITSKY"
-                category="DESIGN"
-                onClick={() => window.location.href = '/articles/design-systems'}
-              />
-            </div>
-          </div>
-        </section>
+            {additionalArticles.length > 3 && (
+              <section className="py-8 bg-white">
+                <div className="content-container space-y-12">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+                    {additionalArticles.slice(3, 6).map((article) => (
+                      <PodcastCard
+                        key={article.id}
+                        guestPhoto={article.article_authors?.[0]?.authors?.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"}
+                        guestName={article.article_authors?.[0]?.authors?.name || "GTM Expert"}
+                        episodeTitle={article.title}
+                        episodeBlurb={article.subtitle || article.meta_description || ""}
+                        episodeDate={new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        authorName={article.article_authors?.[0]?.authors?.name?.toUpperCase() || "GTM TEAM"}
+                        category={article.content_pillars?.name?.toUpperCase() || "GTM"}
+                        onClick={() => window.location.href = `/articles/${article.content_pillars?.slug}/${article.slug}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+          </>
+        )}
       </div>
     </>
   );

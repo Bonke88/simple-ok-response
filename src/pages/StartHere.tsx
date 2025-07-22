@@ -1,119 +1,159 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Rocket, Users, BarChart3, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ContentAPI } from '@/lib/api/content';
+import SEO from '@/components/seo/SEO';
 
 const StartHere = () => {
-  const learningPath = [
-    {
-      step: 1,
-      title: "Pick Winners, Not Just Cool Tech",
-      description: "Most engineers build what they think is cool, not what customers will pay for. Learn how to validate ideas before you code.",
-      category: "picking-winners",
-      icon: <TrendingUp className="h-6 w-6" />,
-      readTime: "30 min"
-    },
-    {
-      step: 2,
-      title: "Ship It (Break the 80% Trap)",
-      description: "You'll never feel ready to launch. Learn how to ship imperfect products and iterate based on real feedback.",
-      category: "ship-it",
-      icon: <Rocket className="h-6 w-6" />,
-      readTime: "25 min"
-    },
-    {
-      step: 3,
-      title: "Find Your First Customers",
-      description: "From zero to $1K MRR requires different tactics than scaling to $10K. Start with manual, unscalable methods.",
-      category: "first-customers",
-      icon: <Users className="h-6 w-6" />,
-      readTime: "45 min"
-    },
-    {
-      step: 4,
-      title: "Scale Without Burnout",
-      description: "Grow your side project while keeping your day job and family relationships intact. Energy management is everything.",
-      category: "scale",
-      icon: <BarChart3 className="h-6 w-6" />,
-      readTime: "35 min"
+  const [pillars, setPillars] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPillars = async () => {
+      try {
+        const pillarsData = await ContentAPI.getPillars();
+        setPillars(pillarsData || []);
+      } catch (error) {
+        console.error('Failed to load pillars:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPillars();
+  }, []);
+
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'TrendingUp': return <TrendingUp className="h-8 w-8" />;
+      case 'Rocket': return <Rocket className="h-8 w-8" />;
+      case 'Users': return <Users className="h-8 w-8" />;
+      case 'BarChart3': return <BarChart3 className="h-8 w-8" />;
+      default: return <TrendingUp className="h-8 w-8" />;
     }
-  ];
+  };
 
-  return (
-    <div className="py-16">
-      <div className="content-container">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="mb-6">Start Here: Your GTM Learning Path</h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            A structured approach to building and marketing your SaaS side project. 
-            Follow this path to avoid the most common mistakes that kill 99% of engineer side projects.
-          </p>
-        </div>
-
-        {/* Learning Path */}
-        <div className="space-y-8 mb-16">
-          {learningPath.map((item, index) => (
-            <Card key={index} className="relative overflow-hidden">
-              <CardHeader>
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-accent text-accent-foreground rounded-full flex items-center justify-center font-bold text-lg">
-                      {item.step}
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <div className="p-2 bg-accent/10 rounded-lg">
-                        {item.icon}
-                      </div>
-                      <CardTitle className="text-xl">{item.title}</CardTitle>
-                    </div>
-                    <p className="text-muted-foreground mb-4">{item.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">⏱️ {item.readTime} to complete</span>
-                      <Button asChild variant="outline">
-                        <Link to={`/articles/${item.category}`} className="flex items-center space-x-2">
-                          <span>Start Step {item.step}</span>
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-
-        {/* Quick Tools Section */}
-        <div className="border-t pt-16">
-          <h2 className="text-center mb-8">Quick Assessment Tools</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="text-center">
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold mb-2">Project Viability Scorer</h3>
-                <p className="text-muted-foreground mb-4">Get an honest assessment of your side project idea's market potential in 5 minutes.</p>
-                <Button asChild className="gtm-button-primary">
-                  <Link to="/tools/project-scorer">Take Assessment →</Link>
-                </Button>
-              </CardContent>
-            </Card>
-            <Card className="text-center">
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold mb-2">Will I Ever Launch?</h3>
-                <p className="text-muted-foreground mb-4">Brutally honest diagnostic about your actual launch probability.</p>
-                <Button asChild className="gtm-button-primary">
-                  <Link to="/tools/launch-diagnostic">Get Diagnosis →</Link>
-                </Button>
-              </CardContent>
-            </Card>
+  if (isLoading) {
+    return (
+      <div className="py-16">
+        <div className="content-container">
+          <div className="animate-pulse space-y-8">
+            <div className="text-center space-y-4">
+              <div className="h-12 bg-muted rounded w-1/2 mx-auto"></div>
+              <div className="h-6 bg-muted rounded w-3/4 mx-auto"></div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-8">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-64 bg-muted rounded"></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <>
+      <SEO
+        title="Start Here - GTM Night Shift Learning Path"
+        description="Your step-by-step guide to building and launching successful side projects. From idea validation to scaling your first $10K MRR."
+        keywords={['start here', 'learning path', 'side projects', 'go-to-market', 'validation', 'launch']}
+        url="/start"
+      />
+      
+      <div className="py-16">
+        <div className="content-container">
+          <div className="text-center mb-16">
+            <h1 className="mb-6">Your GTM Learning Path</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Follow this step-by-step path to build and launch successful side projects. 
+              Each pillar builds on the previous one, designed specifically for engineers with limited time.
+            </p>
+          </div>
+
+          {pillars.length > 0 ? (
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8">
+                {pillars
+                  .sort((a, b) => a.order_index - b.order_index)
+                  .map((pillar, index) => (
+                    <Link key={pillar.id} to={`/articles/${pillar.slug}`}>
+                      <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+                        <CardHeader>
+                          <div className="flex items-center space-x-4 mb-4">
+                            <div className="p-3 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                              {getIconComponent(pillar.icon_name)}
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Badge variant="outline" className="text-xs">
+                                STEP {index + 1}
+                              </Badge>
+                              {pillar.content_percentage && (
+                                <Badge variant="secondary" className="text-xs">
+                                  {pillar.content_percentage}% of content
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                          <CardTitle className="text-2xl group-hover:text-accent transition-colors">
+                            {pillar.name}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-muted-foreground mb-6 leading-relaxed">
+                            {pillar.description}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-accent">
+                              Explore {pillar.name} →
+                            </span>
+                            <ArrowRight className="h-4 w-4 text-accent group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+              </div>
+
+              {/* Call to Action */}
+              <div className="text-center mt-16">
+                <Card className="max-w-2xl mx-auto">
+                  <CardContent className="pt-8 pb-8">
+                    <h2 className="text-2xl font-bold mb-4">Ready to Start Building?</h2>
+                    <p className="text-muted-foreground mb-6">
+                      Get our free toolkit with templates, checklists, and frameworks 
+                      to validate and launch your side project in 90 days.
+                    </p>
+                    <div className="space-y-4">
+                      <Link 
+                        to="/tools" 
+                        className="inline-block bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+                      >
+                        Get Free GTM Toolkit →
+                      </Link>
+                      <p className="text-sm text-muted-foreground">
+                        No email required. Instant access to all tools.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <h2 className="text-2xl font-bold mb-4">Content Coming Soon</h2>
+              <p className="text-muted-foreground mb-8">
+                We're building an amazing learning path for you. Check back soon!
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
