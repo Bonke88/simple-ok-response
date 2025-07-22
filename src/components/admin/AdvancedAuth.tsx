@@ -183,7 +183,7 @@ export const AdvancedAuth = () => {
                 <Input
                   id="password-length"
                   type="number"
-                  value={authConfig.password_min_length.toString()}
+                  value={authConfig.password_min_length}
                   onChange={(e) => updateAuthConfig({ password_min_length: parseInt(e.target.value) || 8 })}
                   min="6"
                   max="50"
@@ -255,7 +255,7 @@ export const AdvancedAuth = () => {
                 <Input
                   id="jwt-exp"
                   type="number"
-                  value={authConfig.jwt_exp.toString()}
+                  value={authConfig.jwt_exp}
                   onChange={(e) => updateAuthConfig({ jwt_exp: parseInt(e.target.value) || 3600 })}
                 />
                 <p className="text-sm text-gray-600">How long authentication tokens remain valid</p>
