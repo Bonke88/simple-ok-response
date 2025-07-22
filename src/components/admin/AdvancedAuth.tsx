@@ -184,7 +184,12 @@ export const AdvancedAuth = () => {
                   id="password-length"
                   type="number"
                   value={authConfig.password_min_length.toString()}
-                  onChange={(e) => updateAuthConfig({ password_min_length: parseInt(e.target.value) || 8 })}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (!isNaN(value)) {
+                      updateAuthConfig({ password_min_length: value });
+                    }
+                  }}
                   min="6"
                   max="50"
                 />
@@ -256,7 +261,12 @@ export const AdvancedAuth = () => {
                   id="jwt-exp"
                   type="number"
                   value={authConfig.jwt_exp.toString()}
-                  onChange={(e) => updateAuthConfig({ jwt_exp: parseInt(e.target.value) || 3600 })}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (!isNaN(value)) {
+                      updateAuthConfig({ jwt_exp: value });
+                    }
+                  }}
                 />
                 <p className="text-sm text-gray-600">How long authentication tokens remain valid</p>
               </div>
