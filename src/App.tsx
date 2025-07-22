@@ -22,7 +22,6 @@ const CustomerFinder = lazy(() => import('@/pages/tools/CustomerFinder'));
 const LaunchDiagnostic = lazy(() => import('@/pages/tools/LaunchDiagnostic'));
 const AnonymousLaunch = lazy(() => import('@/pages/tools/AnonymousLaunch'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
-const Login = lazy(() => import('@/pages/Login'));
 
 // Admin pages
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
@@ -54,13 +53,10 @@ function App() {
                     <Route path="/tools/launch-diagnostic" element={<LaunchDiagnostic />} />
                     <Route path="/tools/anonymous-launch" element={<AnonymousLaunch />} />
                     
-                    {/* Login Route */}
-                    <Route path="/login" element={<Login />} />
-                    
-                    {/* Protected Admin Routes */}
-                    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-                    <Route path="/admin/pillars" element={<AdminRoute><PillarManager /></AdminRoute>} />
-                    <Route path="/admin/articles" element={<AdminRoute><ArticleManager /></AdminRoute>} />
+                    {/* Admin Routes - No longer protected */}
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/pillars" element={<PillarManager />} />
+                    <Route path="/admin/articles" element={<ArticleManager />} />
                     
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<NotFound />} />

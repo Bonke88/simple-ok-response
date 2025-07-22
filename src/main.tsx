@@ -1,6 +1,6 @@
 
 import { createRoot } from 'react-dom/client';
-import { StrictMode, ErrorBoundary as ReactErrorBoundary } from 'react';
+import { StrictMode } from 'react';
 import App from './App.tsx';
 import './index.css';
 
@@ -30,9 +30,9 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetError
   );
 };
 
-// Custom error boundary wrapper
-class ErrorBoundary extends ReactErrorBoundary {
-  constructor(props: any) {
+// Custom error boundary using React.Component
+class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, { hasError: boolean; error: Error | null }> {
+  constructor(props: React.PropsWithChildren<{}>) {
     super(props);
     this.state = { hasError: false, error: null };
   }
@@ -46,8 +46,8 @@ class ErrorBoundary extends ReactErrorBoundary {
   }
 
   render() {
-    if ((this.state as any).hasError) {
-      return <ErrorFallback error={(this.state as any).error} resetErrorBoundary={() => this.setState({ hasError: false })} />;
+    if (this.state.hasError) {
+      return <ErrorFallback error={this.state.error!} resetErrorBoundary={() => this.setState({ hasError: false })} />;
     }
 
     return this.props.children;
