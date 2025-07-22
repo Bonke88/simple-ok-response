@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
+import AdminRoute from '@/components/auth/AdminRoute';
 import './App.css';
 
 const Homepage = lazy(() => import('@/pages/Homepage'));
@@ -21,6 +22,7 @@ const CustomerFinder = lazy(() => import('@/pages/tools/CustomerFinder'));
 const LaunchDiagnostic = lazy(() => import('@/pages/tools/LaunchDiagnostic'));
 const AnonymousLaunch = lazy(() => import('@/pages/tools/AnonymousLaunch'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
+const Login = lazy(() => import('@/pages/Login'));
 
 // Admin pages
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
@@ -38,7 +40,7 @@ function App() {
             <Toaster />
             <BrowserRouter>
               <Layout>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div></div>}>
                   <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/articles/:category/:slug" element={<Article />} />
@@ -52,10 +54,13 @@ function App() {
                     <Route path="/tools/launch-diagnostic" element={<LaunchDiagnostic />} />
                     <Route path="/tools/anonymous-launch" element={<AnonymousLaunch />} />
                     
-                    {/* Admin Routes */}
-                    <Route path="/admin" element={<AdminDashboard />} />
-                    <Route path="/admin/pillars" element={<PillarManager />} />
-                    <Route path="/admin/articles" element={<ArticleManager />} />
+                    {/* Login Route */}
+                    <Route path="/login" element={<Login />} />
+                    
+                    {/* Protected Admin Routes */}
+                    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    <Route path="/admin/pillars" element={<AdminRoute><PillarManager /></AdminRoute>} />
+                    <Route path="/admin/articles" element={<AdminRoute><ArticleManager /></AdminRoute>} />
                     
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<NotFound />} />
