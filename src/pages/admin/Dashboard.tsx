@@ -7,7 +7,7 @@ import { AnalyticsDashboard } from '@/components/admin/AnalyticsDashboard';
 import { PerformanceMonitor } from '@/components/admin/PerformanceMonitor';
 import { UserRoleManager } from '@/components/admin/UserRoleManager';
 import { ContentWorkflowManager } from '@/components/admin/ContentWorkflowManager';
-import { AdvancedAuth } from '@/components/admin/AdvancedAuth';
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Dashboard = () => {
@@ -117,7 +117,10 @@ const Dashboard = () => {
         </TabsContent>
 
         <TabsContent value="auth">
-          <AdvancedAuth />
+          <div className="p-6">
+            <h3 className="text-lg font-medium mb-2">Authentication Settings</h3>
+            <p className="text-gray-600">Authentication has been removed from this application. Admin access is now open.</p>
+          </div>
         </TabsContent>
 
         <TabsContent value="reports" className="space-y-6">
