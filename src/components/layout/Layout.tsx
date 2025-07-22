@@ -8,6 +8,9 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  // Console log to help with debugging during development
+  console.log('Layout component rendered');
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

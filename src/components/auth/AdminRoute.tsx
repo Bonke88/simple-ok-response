@@ -1,23 +1,28 @@
 
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
+import { logAuthStatus } from '@/lib/debug-utils';
 
 interface AdminRouteProps {
   children: React.ReactNode;
 }
+
+// Set to true ONLY during debugging to bypass authentication
+const BYPASS_AUTH_FOR_TESTING = false;
 
 const AdminRoute = ({ children }: AdminRouteProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log('Checking authentication status...');
+        console.log('Checking authentication status...', location.pathname);
         
         // Get current session
         const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
@@ -31,10 +36,12 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
           console.log('User authenticated:', currentSession.user.email);
           setSession(currentSession);
           setUser(currentSession.user);
+          logAuthStatus(true, currentSession.user.id);
         } else {
           console.log('No authenticated user');
           setUser(null);
           setSession(null);
+          logAuthStatus(false);
         }
       } catch (error: any) {
         console.error('Auth check failed:', error);
@@ -58,7 +65,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
     );
 
     return () => authListener.subscription.unsubscribe();
-  }, []);
+  }, [location.pathname]);
 
   // Loading state
   if (loading) {
@@ -91,10 +98,16 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
     );
   }
 
+  // When in testing mode, bypass authentication
+  if (BYPASS_AUTH_FOR_TESTING) {
+    console.warn('⚠️ AUTHENTICATION BYPASSED FOR TESTING - REMOVE IN PRODUCTION ⚠️');
+    return <>{children}</>;
+  }
+
   // Not authenticated
   if (!user) {
     console.log('Redirecting to login - No user authenticated');
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   // Authenticated user - for now, allow any authenticated user to access admin

@@ -60,7 +60,7 @@ function App() {
                     {/* Protected Admin Routes */}
                     <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
                     <Route path="/admin/pillars" element={<AdminRoute><PillarManager /></AdminRoute>} />
-                    <Route path="/admin/articles" element={<div style={{padding: '20px', fontSize: '24px', color: 'green'}}>✅ TEST: Route is working!</div>} />
+                    <Route path="/admin/articles" element={<AdminRoute><ArticleManager /></AdminRoute>} />
                     
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<NotFound />} />
