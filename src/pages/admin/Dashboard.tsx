@@ -1,9 +1,13 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ContentManager } from '@/components/admin/ContentManager';
 import { AnalyticsDashboard } from '@/components/admin/AnalyticsDashboard';
 import { PerformanceMonitor } from '@/components/admin/PerformanceMonitor';
+import { UserRoleManager } from '@/components/admin/UserRoleManager';
+import { ContentWorkflowManager } from '@/components/admin/ContentWorkflowManager';
+import { AdvancedAuth } from '@/components/admin/AdvancedAuth';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Dashboard = () => {
@@ -23,11 +27,14 @@ const Dashboard = () => {
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="content">Content Management</TabsTrigger>
+          <TabsTrigger value="content">Content</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="workflow">Workflow</TabsTrigger>
+          <TabsTrigger value="auth">Auth</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
         </TabsList>
 
@@ -99,6 +106,18 @@ const Dashboard = () => {
 
         <TabsContent value="performance">
           <PerformanceMonitor />
+        </TabsContent>
+
+        <TabsContent value="users">
+          <UserRoleManager />
+        </TabsContent>
+
+        <TabsContent value="workflow">
+          <ContentWorkflowManager />
+        </TabsContent>
+
+        <TabsContent value="auth">
+          <AdvancedAuth />
         </TabsContent>
 
         <TabsContent value="reports" className="space-y-6">

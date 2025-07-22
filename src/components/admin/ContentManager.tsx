@@ -241,11 +241,13 @@ export const ContentManager = () => {
       </div>
 
       <Tabs defaultValue="articles" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="articles">Articles ({articles.length})</TabsTrigger>
           <TabsTrigger value="tools">Tools ({tools.length})</TabsTrigger>
           <TabsTrigger value="bulk-articles">Bulk Actions - Articles</TabsTrigger>
           <TabsTrigger value="bulk-tools">Bulk Actions - Tools</TabsTrigger>
+          <TabsTrigger value="collaboration">Collaboration</TabsTrigger>
+          <TabsTrigger value="versions">Version Control</TabsTrigger>
         </TabsList>
 
         <TabsContent value="articles" className="space-y-4">
@@ -372,6 +374,75 @@ export const ContentManager = () => {
             onSelectionChange={setSelectedTools}
             onOperationComplete={fetchContent}
           />
+        </TabsContent>
+
+        <TabsContent value="collaboration">
+          <Card>
+            <CardHeader>
+              <CardTitle>Collaboration Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Collaboration features are available when editing specific content items.
+                Select an article or tool to access commenting and real-time collaboration.
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">Recent Comments</h3>
+                    <p className="text-sm text-gray-600">
+                      View and manage comments across all content
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">Active Collaborators</h3>
+                    <p className="text-sm text-gray-600">
+                      See who's currently working on content
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="versions">
+          <Card>
+            <CardHeader>
+              <CardTitle>Version Control Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Version control features are available when editing specific content items.
+                Select an article or tool to access version history and restore capabilities.
+              </p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">Total Versions</h3>
+                    <div className="text-2xl font-bold">47</div>
+                    <p className="text-sm text-gray-600">Across all content</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">Recent Changes</h3>
+                    <div className="text-2xl font-bold">12</div>
+                    <p className="text-sm text-gray-600">This week</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">Contributors</h3>
+                    <div className="text-2xl font-bold">5</div>
+                    <p className="text-sm text-gray-600">Active editors</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>
