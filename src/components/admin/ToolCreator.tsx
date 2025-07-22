@@ -112,8 +112,17 @@ export const ToolCreator = ({ onSuccess, editingTool }: ToolCreatorProps) => {
     setIsLoading(true);
     
     try {
+      // Ensure all required fields are present for database insertion
       const toolData = {
-        ...data,
+        name: data.name, // Required field
+        slug: data.slug, // Required field
+        description: data.description || null,
+        tool_type: data.tool_type,
+        status: data.status,
+        pillar_id: data.pillar_id || null,
+        meta_title: data.meta_title || null,
+        meta_description: data.meta_description || null,
+        can_embed: data.can_embed,
         config: {
           type: data.tool_type,
           settings: {}

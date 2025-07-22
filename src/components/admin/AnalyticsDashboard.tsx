@@ -91,35 +91,45 @@ export const AnalyticsDashboard = () => {
     const pageViews = events.filter(e => e.event_type === 'page_view').length;
     const uniqueVisitors = new Set(events.map(e => e.user_identifier)).size;
     
-    // Calculate tool usage statistics
-    const toolStats = toolUsage.reduce((acc, usage) => {
-      acc[usage.tool_name] = (acc[usage.tool_name] || 0) + 1;
+    // Calculate tool usage statistics with proper type handling
+    const toolStats = toolUsage.reduce((acc: Record<string, number>, usage) => {
+      const toolName = usage.tool_name;
+      if (typeof toolName === 'string') {
+        acc[toolName] = (acc[toolName] || 0) + 1;
+      }
       return acc;
-    }, {} as Record<string, number>);
+    }, {});
 
     const topTools = Object.entries(toolStats)
-      .map(([name, usage]) => ({ name, usage, slug: name.toLowerCase().replace(/\s+/g, '-') }))
+      .map(([name, usage]) => ({ 
+        name, 
+        usage: Number(usage), // Ensure usage is a number
+        slug: name.toLowerCase().replace(/\s+/g, '-') 
+      }))
       .sort((a, b) => b.usage - a.usage)
       .slice(0, 5);
 
+    // Calculate page views with proper type safety
+    const totalPageViews = Number(pageViews) || 0;
+
     // Mock data for demonstration (replace with real calculations)
     return {
-      pageViews,
+      pageViews: totalPageViews,
       uniqueVisitors,
       avgSessionDuration: 180, // 3 minutes
       bounceRate: 45.2,
       conversionRate: 2.8,
       topArticles: articles.slice(0, 5).map(a => ({
         title: a.title,
-        views: a.view_count || 0,
+        views: Number(a.view_count) || 0,
         slug: a.slug
       })),
       topTools,
       trafficSources: [
-        { source: 'Organic Search', visits: pageViews * 0.6, percentage: 60 },
-        { source: 'Direct', visits: pageViews * 0.25, percentage: 25 },
-        { source: 'Social Media', visits: pageViews * 0.10, percentage: 10 },
-        { source: 'Referral', visits: pageViews * 0.05, percentage: 5 },
+        { source: 'Organic Search', visits: Math.floor(totalPageViews * 0.6), percentage: 60 },
+        { source: 'Direct', visits: Math.floor(totalPageViews * 0.25), percentage: 25 },
+        { source: 'Social Media', visits: Math.floor(totalPageViews * 0.10), percentage: 10 },
+        { source: 'Referral', visits: Math.floor(totalPageViews * 0.05), percentage: 5 },
       ],
       contentPerformance: generateMockTimeSeriesData(),
       userJourney: [
