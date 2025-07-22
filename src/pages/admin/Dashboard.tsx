@@ -3,11 +3,6 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ContentManager } from '@/components/admin/ContentManager';
-import { AnalyticsDashboard } from '@/components/admin/AnalyticsDashboard';
-import { PerformanceMonitor } from '@/components/admin/PerformanceMonitor';
-import { UserRoleManager } from '@/components/admin/UserRoleManager';
-import { ContentWorkflowManager } from '@/components/admin/ContentWorkflowManager';
-
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Dashboard = () => {
@@ -27,15 +22,10 @@ const Dashboard = () => {
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-8">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="content">Content</TabsTrigger>
+          <TabsTrigger value="content">Content Management</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="workflow">Workflow</TabsTrigger>
-          <TabsTrigger value="auth">Auth</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -100,45 +90,21 @@ const Dashboard = () => {
           <ContentManager />
         </TabsContent>
 
-        <TabsContent value="analytics">
-          <AnalyticsDashboard />
-        </TabsContent>
-
-        <TabsContent value="performance">
-          <PerformanceMonitor />
-        </TabsContent>
-
-        <TabsContent value="users">
-          <UserRoleManager />
-        </TabsContent>
-
-        <TabsContent value="workflow">
-          <ContentWorkflowManager />
-        </TabsContent>
-
-        <TabsContent value="auth">
-          <div className="p-6">
-            <h3 className="text-lg font-medium mb-2">Authentication Settings</h3>
-            <p className="text-gray-600">Authentication has been removed from this application. Admin access is now open.</p>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="reports" className="space-y-6">
+        <TabsContent value="analytics" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Reports & Exports</CardTitle>
+              <CardTitle>Analytics Dashboard</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600">
-                Advanced reporting features will be implemented here, including:
+                Detailed analytics will be implemented here, including:
               </p>
               <ul className="list-disc list-inside mt-4 space-y-2 text-gray-600">
-                <li>Custom date range analytics</li>
-                <li>Content performance reports</li>
-                <li>User behavior analysis</li>
-                <li>Revenue attribution tracking</li>
-                <li>A/B testing results</li>
-                <li>Data export functionality</li>
+                <li>Article performance metrics</li>
+                <li>Tool usage statistics</li>
+                <li>User engagement data</li>
+                <li>Conversion tracking</li>
+                <li>SEO performance</li>
               </ul>
             </CardContent>
           </Card>

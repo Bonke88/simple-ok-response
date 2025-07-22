@@ -13,8 +13,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Plus, Edit2, Eye, Trash2, FileText, Clock, TrendingUp } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-console.log('ArticleManager component loaded');
-
 interface Article {
   id: string;
   title: string;

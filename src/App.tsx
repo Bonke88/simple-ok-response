@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
-import AdminRoute from '@/components/auth/AdminRoute';
 import './App.css';
 
 const Homepage = lazy(() => import('@/pages/Homepage'));
@@ -21,7 +20,6 @@ const ProjectScorer = lazy(() => import('@/pages/tools/ProjectScorer'));
 const CustomerFinder = lazy(() => import('@/pages/tools/CustomerFinder'));
 const LaunchDiagnostic = lazy(() => import('@/pages/tools/LaunchDiagnostic'));
 const AnonymousLaunch = lazy(() => import('@/pages/tools/AnonymousLaunch'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // Admin pages
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
@@ -39,7 +37,7 @@ function App() {
             <Toaster />
             <BrowserRouter>
               <Layout>
-                <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div></div>}>
+                <Suspense fallback={<div>Loading...</div>}>
                   <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/articles/:category/:slug" element={<Article />} />
@@ -53,13 +51,10 @@ function App() {
                     <Route path="/tools/launch-diagnostic" element={<LaunchDiagnostic />} />
                     <Route path="/tools/anonymous-launch" element={<AnonymousLaunch />} />
                     
-                    {/* Admin Routes - No longer protected */}
+                    {/* Admin Routes */}
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/admin/pillars" element={<PillarManager />} />
                     <Route path="/admin/articles" element={<ArticleManager />} />
-                    
-                    {/* Catch-all route for 404 errors */}
-                    <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
               </Layout>
